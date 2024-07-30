@@ -1,0 +1,48 @@
+
+
+npm install -g @angular/cli
+ng new ESP
+ng serve
+
+develop branch:
+git checkout feature/registration-login
+git checkout feature/login
+
+git checkout feature/registration-login
+git add .
+git commit -m " Registration and login validation"
+git push origin feature/registration-login
+git push --set-upstream origin feature/registration-login
+
+
+202
+The request has been accepted for processing, 
+but the processing has not been completed.
+
+200 OK:
+Frontend: Good, got what you asked for.
+Backend: All good, here's what you wanted.
+
+400 Bad Request:
+Frontend: Oops, you sent something wrong.
+Backend: I couldn't understand what you sent.
+
+401 Unauthorized:
+Frontend: Can't go there without logging in.
+Backend: Who are you? You need to log in.
+
+403 Forbidden:
+Frontend: Nope, you're not allowed there.
+Backend: Sorry, you don't have permission for that.
+
+404 Not Found:
+Frontend: Can't find what you're looking for.
+Backend: That thing you wanted? It's not here.
+
+Backend___________________________________________
+500 Internal Server Error:
+Frontend: Something's broken, try again later.
+Backend: Uh-oh, something went wrong on our end.
+
+
+

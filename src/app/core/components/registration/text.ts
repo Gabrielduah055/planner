@@ -1,0 +1,40 @@
+export const signupPageTexts = {
+  mainHeading: 'Seamlessly Plan, Manage, and Execute Unforgettable Events',
+  subHeading: 'Streamline your event management process, engage attendees, and create memorable experiences with our comprehensive event planning platform.',
+  emailLabel: 'Email',
+  emailPlaceholder: 'Enter your email address',
+  passwordLabel: 'Password',
+  passwordPlaceholder: 'Enter password here',
+  rememberCheckboxLabel: 'Remember me',
+  forgotPasswordLink: 'Forgot password?',
+  loginButton: 'Login',
+  dontHaveAccountText: 'Don\'t have an account?',
+  signUpLinkText: 'Sign up',
+  emailInvalidError: 'Invalid email address',
+  emailRequiredError: 'Email is required',
+  passwordRequiredError: 'Password is required',
+  passwordMinLengthError: 'Password must be at least 8 characters long',
+  event: 'Event',
+  vista: 'Vista',
+  submit: 'Submit',
+  returnToPlan: 'Returning to plan more amazing events? Log in to your account to pick up where you left off.', // Added returnToPlan here
+  isErrorMsg: 'Email or password is incorrect',
+  isSuccessMsg: 'Login successful',
+  rememberMeForDays: 'Remember me for 30 days',
+  forgotPassword: 'Forgot Password',
+  signup: 'Sign up',
+  readyToStart: 'Ready to start planning unforgettable events?',
+  sigupNow: 'Sign up now to access exclusive features',
+  signupAs: 'Sign up as*',
+  organizer: 'ORGANIZER',
+  attendee: 'ATTENDEE',
+  fullName: 'Full Name*',
+  accountAlready: 'Already have an account?',
+  logIn: 'Log in'
+};
+
+export const signupPageImages = {
+  backgroundImage: 'assets/esp/signup-bg.png',
+  logoImage: 'assets/esp/logo.png',
+  eyeIcon: 'assets/esp/open-pass.png',
+};

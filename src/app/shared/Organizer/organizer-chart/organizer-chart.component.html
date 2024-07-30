@@ -1,0 +1,160 @@
+<div class="card-all m-0 flex w-4/4 mt-3 ml-8 mr-8">
+  <div
+    class="card w-3/4 h-[267px] border-[1px] rounded-lg shadow-sm m-2 p-5"
+  >
+    <div class="mt-0 absolute pl-2">
+      <h2 class="mt-0 text-[24px] font-semibold">Best Selling</h2>
+    <div>
+      <app-chart></app-chart>
+    </div>
+    </div>
+
+    <div class="mt-36 pl-10 xl:w-[350px] 2xl:w-[625px] 2xl:pl-20 ">
+      <div
+        class="flex xl:w-full xl:h-fit xl:ml-36 xl:-mt-36 text-[12px] space-x-5"
+      >
+        <p
+          class="border-b border-y-red-500 w-14 pb-1 cursor-pointer"
+          (click)="showContent('monthly')"
+        >
+          Monthly
+        </p>
+        <p
+          class="border-b border-y-gray-400 w-14 pb-1 cursor-pointer"
+          (click)="showContent('weekly')"
+        >
+          Weekly
+        </p>
+        <p
+          class="border-b border-y-gray-400 w-14 pb-1 cursor-pointer"
+          (click)="showContent('daily')"
+        >
+          Daily
+        </p>
+      </div>
+
+      <div class="flex xl:w-full xl:h-fit xl:ml-36 xl:-mt-30 text-[12px]">
+        <div class="monthly">
+          <div
+            *ngIf="activeStep === 'monthly'"
+            [class]="
+              activeStep === 'monthly'
+                ? 'border-y-orange-400 '
+                : 'text-gray'
+            "
+          >
+            <p
+              class="w-2/3  xl:mt-2 text-[12px] 2xl:mt-5 2xl:text-[12px] 2xl:leading-[18px] leading-4 h-2/3 pr-5"
+            >
+              Explore best-selling events monthly, weekly, or daily. Track
+              ticket availability, sales, and total events held. Visualize
+              data with a circular graph for tickets left, sold, and events
+              held. Optimize event planning for success.
+            </p>
+          </div>
+        </div>
+        <div class="monthly">
+          <div
+            *ngIf="activeStep === 'weekly'"
+            [class]="
+              activeStep === 'weekly' ? 'border-y-orange-400 ' : 'text-gray'
+            "
+          >
+            <p
+              class="w-2/3 text-[12px] 2xl:mt-5 2xl:text-[12px] 2xl:leading-[18px] leading-4 h-2/3 pr-5"
+            >
+              Explore best-selling events monthly, weekly, or daily. Track
+              ticket availability, sales, and total events held. Visualize
+              data with a circular graph for tickets left, sold, and events
+              held. Optimize event planning for success.
+            </p>
+          </div>
+        </div>
+        <div class="weekly">
+          <div
+            *ngIf="activeStep === 'daily'"
+            [class]="
+              activeStep === 'daily' ? 'border-y-orange-400 ' : 'text-gray'
+            "
+          >
+            <p
+              class="w-2/3 text-[12px] 2xl:mt-5 2xl:text-[12px] 2xl:leading-[18px] leading-4 h-2/3 pr-5"
+            >
+              Explore best-selling events monthly, weekly, or daily. Track
+              ticket availability, sales, and total events held. Visualize
+              data with a circular graph for tickets left, sold, and events
+              held. Optimize event planning for success.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="xl:ml-10 2xl:ml-20">
+      <div class="xl:ml-36 flex space-x-16 2xl:mt-0 2xl:mb-5">
+        <p
+          class="border-b-4 border-y-orange-300 2xl:w-[26px] 2xl:h-[5px] pb-5"
+          style="border-color: #ffd6ae"
+        ></p>
+        <p
+          class="border-b-4 border-y-orange-300 w-6 pb-1"
+          style="border-color: #ff9c66"
+        ></p>
+        <p
+          class="border-b-4 border-y-orange-300 w-6 pb-1"
+          style="border-color: #ff4405"
+        ></p>
+      </div>
+
+      <div
+        class="flex xl:w-full xl:h-fit xl:ml-36 xl:-mt-2 text-[12px] space-x-5 static"
+      >
+        <div
+          class="flex xl:w-full xl:h-fit xl:ml-0 xl:-mt-0 text-[12px] space-x-8"
+        >
+          <h3 class="w-14 pb-1 font-bold text-[14px]">44 Left</h3>
+          <h3 class="w-14 pb-1 font-bold text-[14px]">44</h3>
+          <h3 class="w-14 pb-1 font-bold text-[14px]">44</h3>
+        </div>
+        <div
+          class="2xl:flex 2xl:absolute xl:absolute xl:flex 2xl:space-x-5 2xl:left-64 2xl:pl-2 xl:left-56 xl:mt-8 2xl:mt-8 xl:pr-5 xl:text-xs xl:space-x-5 xl:font-medium"
+        >
+          <p class="">Ticket Left</p>
+          <p class=" ">Ticket Left</p>
+          <p class=" ">Ticket Left</p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="flex xl:w-full xl:h-fit xl:ml-36 xl:-mt-2 text-[12px] space-x-5 static"
+    ></div>
+  </div>
+
+  <div
+    class="card w-3/4 h-[267px] border-[1px] rounded-lg shadow-sm m-2 p-5"
+  >
+    <div class="xl:-mt-2">
+      <h2 class="mt-5 font-semibold text-[20px] font-inter">Tickets sold today</h2>
+      <h3 class="mt-5 text-[14px] font-semibold ">4044pcs</h3>
+
+      <div class="xl:mt-5">
+        <p class="text-[12px] font-normal">
+          Stay ahead of the curve with our real-time 'Tickets Sold Today'
+          tracker, offering immediate insights into today's ticket sales. By
+          keeping a pulse on current sales trends, you'll be equipped to
+          make proactive decisions and fine-tune event strategies for
+          optimal success.
+        </p>
+
+        <div class="2xl:mt-5 w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+          <div
+            class="bg-red-600 h-2.5 rounded-full"
+            style="width: 50%"
+          ></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

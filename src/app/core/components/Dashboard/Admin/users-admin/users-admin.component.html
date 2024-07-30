@@ -1,0 +1,257 @@
+<div class="flex flex-col md:flex-row h-screen">
+
+  <app-admin-sidebar class="md:w-64"></app-admin-sidebar>
+
+  <div class="flex-1 mt-4 mr-2 overflow-hidden">
+    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 w-full mb-10 shadow-sm shadow-blue-gray-900/5">
+
+      <div class="dash border-[1px] rounded-t-lg pl-5 flex">
+        <div class="dash-content-left mb-2">
+          <div class="font-bold text-bol">User Management</div>
+          <p>Manage users and their account permissions here.</p>
+        </div>
+        <div class="dash-content-right mb-2 flex ml-auto space-x-4 mt-2 xl:mt-2 h-10">
+          <img src="assets/esp/dashboard/bell.png" alt="Bell Icon" class="block" />
+          <div class="relative">
+            <img *ngIf="profileImageUrl; else svgFallbackp" [src]="profileImageUrl" alt="Avatar" class="block cursor-pointer mb-2 border rounded-full w-10 h-10" (click)="toggleCard()" />
+            <ng-template #svgFallbackp>
+              <svg width="18" height="18" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="bg-[#C7B9DA] pt-2 pb-1 w-10 h-10 rounded-full border">
+                <path d="M17 19V17C17 15.9391 16.5786 14.9217 15.8284 14.1716C15.0783 13.4214 14.0609 13 13 13H5C3.93913 13 2.92172 13.4214 2.17157 14.1716C1.42143 14.9217 1 15.9391 1 17V19M13 5C13 7.20914 11.2091 9 9 9C6.79086 9 5 7.20914 5 5C5 2.79086 6.79086 1 9 1C11.2091 1 13 2.79086 13 5Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </ng-template>
+            <div *ngIf="showProfileCard" class="absolute right-0 mt-[1rem] w-72 bg-white shadow-md rounded-lg p-6 z-10">
+              <div class="flex items-center mb-4">
+                <img *ngIf="profileImageUrl; else svgFallbackp" [src]="profileImageUrl" alt="Navbar Image" class="mr-2 border rounded-full w-10 h-10" />
+                <div class="ml-2">
+                  <h3 class="text-lg medium">{{ fullName }}</h3>
+                  <p class="text-xs text-gray-500">{{ email }}</p>
+                </div>
+              </div>
+              <hr class="bg-gray-500 border-2 dark:bg-gray-800 dark:border-gray-700 mb-4" />
+              <button class="flex items-center text-sm text-gray-500" (click)="accountSettings()">
+                <img src="assets/esp/dashboard/settings.png" class="w-4 h-4 mr-2" />
+                Account settings
+              </button>
+            </div>
+          </div>
+          <p class="block pt-2 h-8">{{ fullName }}</p>
+          <button class="h-8 pt-3" (click)="toggleCard()">
+            <img src="assets/esp/dashboard/down.png" alt="Down Icon" class="block mr-8" [class.clicked]="showProfileCard"/>
+          </button>
+        </div>
+      </div>
+  </div>
+
+  <div class="overflow-y-hidden m-4 border border-gray-200 rounded-lg">
+    <div class="searchFilter flex flex-wrap items-center space-x-40 md:space-x-4 p-4">
+      <div class="relative flex-grow mb-4 md:mb-0">
+        All users
+        <span class="p-4 bg-[#FFF4ED] rounded-full size-4 absolute ml-3">
+          <span class="absolute -mt-3 -ml-2 font-bold text-[#BC1B06]">{{totalUsersCount}}</span>
+        </span>
+      </div>
+      <div class="relative flex-grow mb-4 md:mb-0">
+        <img src="assets/esp/dashboard/search.png" alt="Location Icon" class="absolute mt-3.5 ml-2 w-4" />
+        <input
+          type="text"
+          id="filterSearch"
+          #filterSearchInput
+          [(ngModel)]="filterUserEmail"
+          (change)="searchUser(filterUserEmail)"
+          class="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-md block pl-7 p-2.5 w-full"
+          placeholder="Search users by name or email"
+        />
+      </div>
+      <div class="relative flex-grow mb-4 md:mb-0">
+        <img src="assets/esp/dashboard/filter.png" alt="Filter Icon" class="absolute mt-3 ml-1" />
+        <select
+          id="filter"
+          #filterRolesSelect
+          [(ngModel)]="filterByRoles"
+          (change)="filterUsersByRole(filterByRoles)"
+          class="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-md block pl-7 p-2.5 w-full custom-select"
+        >
+          <option class="text-gray-400" value="" disabled selected>Filter by role</option>
+          <option value="Admin">Admin</option>
+          <option value="Attendee">Attendee</option>
+          <option value="Organizer">Organizer</option>
+        </select>
+      </div>
+      <button type="button" class="bg-[#E04F16] border border-gray-300 text-white font-normal py-2 px-4 rounded-lg flex items-center" (click)="openModal()">
+        <img src="assets/esp/dashboard/user-plus.png" alt="Filter Icon" class="mr-2" />
+        Invite Admin
+      </button>
+    </div>
+    <div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+        <div class="flex space-x-40">
+          <h2 class="mb-2 text-2xl font-bold">Invite Admin</h2>
+          <span class="close font-bold text-2xl" (click)="cancelMenu()">&times;</span>
+        </div>
+        <form (ngSubmit)="sendInvite()" #inviteForm="ngForm">
+          <div class="flex flex-col text-left">
+            <label class="font-medium mb-2" for="name">Name</label>
+            <input
+              class="border border-gray-400 p-3 rounded-lg"
+              type="text"
+              id="name"
+              [(ngModel)]="adminName"
+              name="adminName"
+              placeholder="Type name here"
+              required
+              #name="ngModel"
+            />
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-red-600 mt-2">
+              <div *ngIf="name.errors?.['required']">Name is required.</div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-col text-left">
+            <label class="font-medium mb-2" for="email">Email</label>
+            <input
+              class="border border-gray-400 p-3 rounded-lg"
+              type="email"
+              id="email"
+              [(ngModel)]="adminEmail"
+              name="adminEmail"
+              placeholder="olivertwist@example.com"
+              required
+              email
+              #email="ngModel"
+            />
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-600 mt-2">
+              <div *ngIf="email.errors?.['required']">Email is required.</div>
+              <div *ngIf="email.errors?.['email']">Invalid email format.</div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex justify-between">
+            <button type="button" (click)="cancelMenu()" class="bg-white border border-gray-400 text-gray-800 py-2 px-10 rounded-lg mr-2">Cancel</button>
+            <button type="submit" [disabled]="inviteForm.invalid" class="bg-red-600 text-white py-2 px-10 rounded-lg">Send invite</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <div *ngIf="!filteredUsers || filteredUsers.length === 0" class="flex justify-center items-center">
+        <img src="assets/esp/dashboard/users-temp.png" class="mb-10 w-1/4 2xl:w-2/3 mt-10" alt="Users Temp">
+      </div>
+
+      <div *ngIf="filteredUsers && filteredUsers.length > 0" class="overflow-x-auto">
+        <table  class="min-w-full bg-white border-collapse table-fixed">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="py-2 px-4 border-b-2 w-1/6 text-left">Username</th>
+              <th class="py-2 px-4 border-b-2 w-1/6 text-left">Email address</th>
+              <th class="py-2 px-4 border-b-2 w-1/6 text-left whitespace-nowrap">Account approval status</th>
+              <th class="py-2 px-4 border-b-2 w-1/6 text-left">Role</th>
+              <th class="py-2 px-4 border-b-2 w-1/6 text-left">Status</th>
+              <th class="py-2 px-4 border-b-2 w-1/6 text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUsers" class="border-b text-sm">
+              <td class="py-2 px-4 flex items-center">
+                <ng-container *ngIf="user.profileImageUrl; else svgFallback">
+                  <img [src]="user.profileImageUrl" alt="User Profile" class="w-8 h-8 rounded-full mr-2">
+                </ng-container>
+                <ng-template #svgFallback>
+                  <svg width="18" height="18" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="bg-[#C7B9DA] mr-2 pt-2 pb-1 w-8 h-8 rounded-full border">
+                    <path d="M17 19V17C17 15.9391 16.5786 14.9217 15.8284 14.1716C15.0783 13.4214 14.0609 13 13 13H5C3.93913 13 2.92172 13.4214 2.17157 14.1716C1.42143 14.9217 1 15.9391 1 17V19M13 5C13 7.20914 11.2091 9 9 9C6.79086 9 5 7.20914 5 5C5 2.79086 6.79086 1 9 1C11.2091 1 13 2.79086 13 5Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </ng-template>
+                <span class="font-medium">{{ user.fullName }}</span>
+              </td>
+              <td class="py-2 px-4">{{ user.email }}</td>
+              <td class="py-2 px-4 truncate" style="max-width: 100px; overflow: hidden; text-overflow: ellipsis;" title="{{ user.approvalStatus }}">
+                {{ user.approvalStatus }}
+              </td>
+              <td class="py-2 px-4">{{ user.role }}</td>
+              <td class="py-2 px-4">
+                <div class="status-wrapper w-20 flex items-center  rounded" [ngClass]="{ 'text-green-600': user.enabled, 'text-red-600': !user.enabled }" [style.background-color]="user.enabled ? '#eef9ee' : '#ffefef'">
+                  <span class="ml-2 mr-1 mb-1 status-dot">•</span>
+                  {{ user.enabled ? 'Active' : 'Inactive' }}
+                </div>
+              </td>
+
+              <td class="py-2 px-4 relative">
+                <img src="assets/esp/dashboard/three-dots.png" alt="Action Menu" class="ml-6 cursor-pointer" (click)="actionMenu(user.id)">
+                <div *ngIf="user.id === storedId && threeButtonAction" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg z-10" style="min-width: 10rem; top: calc(20% + 0.5rem);">
+                  <button *ngIf="'organizer'" class="flex block px-4 py-2 text-sm text-gray-700 view-details-button"
+                    [routerLink]="['/view-organizer-credentials', user.id]"
+                    (mouseenter)="hoverButton(user.id, 'view-details')"
+                    (mouseleave)="unhoverButton(user.id, 'view-details')"
+                    [ngClass]="{'hover-button': isHoverButton(user.id, 'view-details')}"
+                    >
+                    <svg class="mr-3" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1.61342 8.47415C1.52262 8.33039 1.47723 8.25851 1.45182 8.14764C1.43273 8.06436 1.43273 7.93303 1.45182 7.84975C1.47723 7.73889 1.52262 7.66701 1.61341 7.52325C2.36369 6.33526 4.59693 3.33203 8.00027 3.33203C11.4036 3.33203 13.6369 6.33526 14.3871 7.52325C14.4779 7.66701 14.5233 7.73889 14.5487 7.84975C14.5678 7.93303 14.5678 8.06436 14.5487 8.14764C14.5233 8.25851 14.4779 8.33039 14.3871 8.47415C13.6369 9.66214 11.4036 12.6654 8.00027 12.6654C4.59693 12.6654 2.36369 9.66214 1.61342 8.47415Z" stroke="#475467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M8.00027 9.9987C9.10484 9.9987 10.0003 9.10327 10.0003 7.9987C10.0003 6.89413 9.10484 5.9987 8.00027 5.9987C6.8957 5.9987 6.00027 6.89413 6.00027 7.9987C6.00027 9.10327 6.8957 9.9987 8.00027 9.9987Z" stroke="#475467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    View Details
+                  </button>
+                  <button class="flex block px-4 py-2 text-sm text-gray-700" (click)="setActiveButton(user.id, 'activate')" [ngClass]="{ 'active-button': isActiveButton(user.id, 'activate'), 'hover-button': isHoverButton(user.id, 'activate') }" (mouseenter)="hoverButton(user.id, 'activate')" (mouseleave)="unhoverButton(user.id, 'activate')">
+                    <svg class="mr-3" width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8.00016 9.33333H5.00017C4.06979 9.33333 3.6046 9.33333 3.22607 9.44816C2.3738 9.70669 1.70686 10.3736 1.44832 11.2259C1.3335 11.6044 1.3335 12.0696 1.3335 13M10.6668 11L12.0002 12.3333L14.6668 9.66667M9.66683 4C9.66683 5.65685 8.32368 7 6.66683 7C5.00998 7 3.66683 5.65685 3.66683 4C3.66683 2.34315 5.00998 1 6.66683 1C8.32368 1 9.66683 2.34315 9.66683 4Z" stroke="#475467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Activate User
+                  </button>
+                  <button  class="flex block px-4 py-2 text-sm text-gray-700" (click)="setActiveButton(user.id, 'deactivate')" [ngClass]="{ 'active-button': isActiveButton(user.id, 'deactivate'), 'hover-button': isHoverButton(user.id, 'deactivate') }" (mouseenter)="hoverButton(user.id, 'deactivate')" (mouseleave)="unhoverButton(user.id, 'deactivate')">
+                    <svg class="mr-3" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.0002 2.66797L14.3335 6.0013M14.3335 2.66797L11.0002 6.0013M10.6668 14.0013V13.2013C10.6668 12.0812 10.6668 11.5211 10.4488 11.0933C10.2571 10.717 9.95113 10.411 9.57481 10.2193C9.14699 10.0013 8.58693 10.0013 7.46683 10.0013H4.5335C3.41339 10.0013 2.85334 10.0013 2.42552 10.2193C2.04919 10.411 1.74323 10.717 1.55148 11.0933C1.3335 11.5211 1.3335 12.0812 1.3335 13.2013V14.0013M8.3335 5.0013C8.3335 6.28997 7.28883 7.33464 6.00016 7.33464C4.7115 7.33464 3.66683 6.28997 3.66683 5.0013C3.66683 3.71264 4.7115 2.66797 6.00016 2.66797C7.28883 2.66797 8.3335 3.71264 8.3335 5.0013Z" stroke="#475467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Deactivate User
+                  </button>
+                  <button class="flex block px-4 py-2 cursor-pointer text-sm text-gray-700" (click)="setActiveButton(user.id, 'delete')" [ngClass]="{ 'active-button': isActiveButton(user.id, 'delete'), 'hover-button': isHoverButton(user.id, 'delete') }" (mouseenter)="hoverButton(user.id, 'delete')" (mouseleave)="unhoverButton(user.id, 'delete')">
+                    <svg class="mr-3" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 2H10M2 4H14M12.6667 4L12.1991 11.0129C12.129 12.065 12.0939 12.5911 11.8667 12.99C11.6666 13.3412 11.3648 13.6235 11.0011 13.7998C10.588 14 10.0607 14 9.00623 14H6.99377C5.93927 14 5.41202 14 4.99889 13.7998C4.63517 13.6235 4.33339 13.3412 4.13332 12.99C3.90607 12.5911 3.871 12.065 3.80086 11.0129L3.33333 4M6.66667 7V10.3333M9.33333 7V10.3333" stroke="#475467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Delete User
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="isMenuModalVisible" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+          <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <div class="text-left">
+              <h3 class="mb-2 font-bold">Confirmation</h3>
+              <p>
+                {{ confirmationMessage }}
+              </p>
+            </div>
+            <div class="mt-4 flex justify-center">
+              <button (click)="cancelMenu()" class="bg-white border border-gray-400 text-gray-800 py-2 px-4 rounded-lg mr-2">Cancel</button>
+              <button (click)="confirmAction()" class="bg-red-600 text-white py-2 px-4 rounded-lg">Ok</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pagination-controls flex justify-between items-center m-4">
+          <button (click)="prevPage()" [disabled]="currentPage === 1" class="text-gray-700 py-2 px-4 flex items-center border rounded-md">
+            <svg width="20" height="20" class="mr-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.8334 10.0013H4.16675M4.16675 10.0013L10.0001 15.8346M4.16675 10.0013L10.0001 4.16797" stroke="#344054" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Previous
+          </button>
+
+          <div>
+            <span *ngFor="let page of getPageNumbers()">
+              <button (click)="goToPage(itemsPerPage)" [class.active]="currentPage === page" class="text-gray-700 px-4 py-2 rounded-md mx-1">
+                {{page}}
+              </button>
+            </span>
+          </div>
+
+          <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= totalUsersCount" class="text-gray-700 py-2 px-4 flex items-center border rounded-md">
+            Next
+            <svg width="14" height="14" class="ml-4" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.1665 7.0013H12.8332M12.8332 7.0013L6.99984 1.16797M12.8332 7.0013L6.99984 12.8346" stroke="#344054" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

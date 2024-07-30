@@ -1,0 +1,97 @@
+
+<div
+  class="container font-inter relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 sm:h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-sm shadow-blue-gray-900/5 lg:h-[calc(100vh-2rem)] 2xl:h-[calc(100vh-2rem)]"
+>
+  <app-organizer-dash></app-organizer-dash>
+
+  <div
+    class="dash absolute ml-[305px] border-[1px] rounded-t-lg w-[900px] 2xl:h-fit xl:h-fit 2xl:absolute 2xl:ml-[305px] 2xl:border-[1px] 2xl:rounded-t-lg 2xl:w-[1580px] xl:w-[940px]"
+  >
+    <div
+      class="dash border-[1px] rounded-t-lg p-0 pl-5 flex 2xl:border-[1px] 2xl:rounded-t-lg 2xl:p-2 2xl:pl-5 2xl:flex"
+    >
+      <app-organizer-top-bar [heading]="heading" [sub_Heading]="sub_heading">
+      </app-organizer-top-bar>
+    </div>
+
+    <div class="p-6">
+      <div class="font-bold text-[20px]">
+        <h2 class="">
+          Welcome, <span>{{ fullName }}</span> 👋
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-7">
+          <div class="border p-6 shadow-md rounded">
+            <div class="flex justify-between">
+              <p class="text-sm font-medium text-gray-700">Tickets</p>
+              <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+            </div>
+            <div class="flex justify-between items-center">
+              <h2 class="text-3xl font-semibold text-gray-600">{{OrganizerData?.sumOfAllAllocatedTicketsOfOrganizer}}</h2>
+            </div>
+          </div>
+          <div class="border p-6 shadow-md rounded">
+            <div class="flex justify-between">
+              <p class="text-sm font-medium text-gray-700">Sales(GH₵)</p>
+              <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+            </div>
+            <div class="flex justify-between items-center">
+              <h2 class="text-3xl font-semibold text-gray-600">4,000</h2>
+            </div>
+          </div>
+          <div class="border p-6 shadow-md rounded">
+            <div class="flex justify-between">
+              <p class="text-sm font-medium text-gray-700">Total Revenue (GH₵)</p>
+              <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+            </div>
+            <div class="flex justify-between items-center">
+              <h2 class="text-3xl font-semibold text-gray-600">{{OrganizerData?.paymentsOfRevenueForOrganizer}}</h2>
+            </div>
+          </div>
+          <div class="border p-6 shadow-md rounded">
+            <div class="flex justify-between">
+              <p class="text-sm font-medium text-gray-700">Event Held</p>
+              <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+            </div>
+            <div class="flex justify-between items-center">
+              <h2 class="text-3xl font-semibold text-gray-600">{{OrganizerData?.eventsHeldByOrganizer}}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="container mx-auto py-6 border p-4 mb-5">
+          <app-organizer-graph
+          *ngIf="OrganizerData && OrganizerData.monthlyRevenueData"
+          [monthlyRevenueData]="OrganizerData.monthlyRevenueData"></app-organizer-graph>
+        </div>
+
+        <div class=" container mx-auto flex gap-8 justify-between w-full mb-4">
+          <div class="dashboardContainer w-6/12 border rounded">
+            <app-organizer-statastics
+              *ngIf="OrganizerData"
+              [totalTickets]="OrganizerData.sumOfAllAllocatedTicketsOfOrganizer"
+              [ticketSold]="OrganizerData.numberOfTicketsBoughtFromOrganizer"></app-organizer-statastics>
+          </div>
+          <div class="w-6/12 border p-5 rounded flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+              <h1 class="text-slate-500 text-2xl font-medium">Tickets sold today</h1>
+            <img src="../../../../../../../assets/esp/dashboard/Line.svg" alt="">
+            </div>
+            <h3 class="text-slate-500 text-xl font-normal">pcs</h3>
+            <p class="text-slate-400 text-sm">{{constant.contents.ticketsContent}}</p>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="container flex gap-5">
+        <div class="w-7/12  border p-5 rounded">
+          <app-organizer-event></app-organizer-event>
+        </div>
+        <div class="h-fit  p-6 border rounded">
+            <ejs-calendar id="calendar" [value]='value' class=" w-96 bg-transparent border-none"></ejs-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

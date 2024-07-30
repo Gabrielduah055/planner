@@ -1,0 +1,193 @@
+<form [formGroup]="dateAndTimeForm">
+  <img src="{{ dateAndTime }}" alt="" />
+
+  <div
+    class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+  >
+    <p>Basic information</p>
+    <p>Location & Venue layout</p>
+    <p class="text-[#BC1B06]">Date & time</p>
+    <p>Event image & ticket</p>
+  </div>
+
+  <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+    <h2 class="font-bold">Date and Time</h2>
+    <p class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]">
+      Tell event-goers when your event starts and ends so they can make plans to
+      attend.
+    </p>
+
+    <div class="mt-5">
+      <div class="labels flex 2xl:space-x-[350px] space-x-60">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900"
+          >Start date</label
+        >
+        <label
+          for="orgEmail"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Start Time*</label
+        >
+      </div>
+
+      <div class="flex 2xl:w-[900px] w-[620px] pl-0">
+        <input
+          type="date"
+          [min]="minDateStart"
+          id=""
+          class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+          placeholder="Enter event title here"
+          formControlName="eventStartDate"
+        />
+
+        <div
+          class="text-red-600 absolute mt-1 text-[10px]"
+          *ngIf="
+            dateAndTimeForm.get('eventStartDate')?.invalid &&
+            (dateAndTimeForm.get('eventStartDate')?.touched ||
+              dateAndTimeForm.get('eventStartDate')?.dirty)
+          "
+        >
+          <span
+            *ngIf="dateAndTimeForm.get('eventStartDate')?.errors?.['eventStartDate']"
+            >Field is required</span
+          >
+        </div>
+
+        <input
+          type="time"
+          id=""
+          class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+          placeholder="Enter event title here"
+          formControlName="eventStartTime"
+        />
+
+        <div
+          class="text-red-600 absolute mt-1 text-[10px]"
+          *ngIf="
+            dateAndTimeForm.get('eventStartTime')?.invalid &&
+            (dateAndTimeForm.get('eventStartTime')?.touched ||
+              dateAndTimeForm.get('eventStartTime')?.dirty)
+          "
+        >
+          <span
+            *ngIf="dateAndTimeForm.get('eventStartTime')?.errors?.['eventStartTime']"
+            >Field is required</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <div class="labels flex 2xl:space-x-[350px] space-x-64">
+        <label for="" class="block mb-2 text-sm font-medium text-gray-900"
+          >End date</label
+        >
+
+        <label
+          for="orgEmail"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >End Time*</label
+        >
+      </div>
+
+      <div class="flex 2xl:w-[900px] w-[620px] pl-0">
+        <input
+          type="date"
+          [min]="minDateEnd"
+          id=""
+          class="ppl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4 pl"
+          placeholder="Enter event title here"
+          formControlName="eventEndDate"
+          (change)="toggleStartTime($event)"
+        />
+
+        <input
+          type="time"
+          id="time2"
+          class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+          placeholder="Enter event title here"
+          formControlName="eventEndTime"
+          (change)="toggleEndTime($event)"
+        />
+      </div>
+      <div
+        class="text-red-600 absolute text-[14px]"
+        *ngIf="dateAndTimeForm.errors?.['dateTimeRangeError']"
+      >
+        <span>
+          {{ dateAndTimeForm.errors?.['dateTimeRangeError'] }}
+        </span>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <div class="mb-5">
+        <div class="flex items-center space-x-4">
+          <input
+            type="checkbox"
+            id="displayStartTime"
+            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            (change)="toggleStartTime($event)"
+          />
+          <label
+            for="displayStartTime"
+            class="block mb-2 text-sm font-medium text-gray-900 mt-1"
+            >Display start time</label
+          >
+        </div>
+        <div class="ml-8">
+          <p class="block mb-2 text-sm font-normal text-gray-900 mt-2">
+            The start time of your event will be displayed to attendees
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center space-x-4">
+          <input
+            type="checkbox"
+            id="displayEndTime"
+            (change)="toggleEndTime($event)"
+            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+          />
+          <label
+            for="displayEndTime"
+            class="block mb-2 text-sm font-medium text-gray-900 mt-1"
+            >Display end time</label
+          >
+        </div>
+        <div class="ml-8">
+          <p class="block mb-2 text-sm font-normal text-gray-900 mt-2">
+            The end time of your event will be displayed to attendees
+          </p>
+        </div>
+      </div>
+    </div>
+
+      <div
+        class="flex gap-5 mb-10 pt-1 justify-end mt-5 2xl:w-[800px] w-[620px]"
+      >
+        <button
+          type="button"
+          class="bg-transparent border-[1px] text-black p-2 cursor-pointer font-normal rounded-md max-w-max"
+          (click)="prevStep()"
+        >
+          Previous
+        </button>
+
+        <button
+          (click)="saveAndContinue()"
+          type="button"
+          class="p-2 cursor-pointer text-white font-normal rounded-md w-[184px]"
+          [disabled]="dateAndTimeForm.invalid"
+          [ngStyle]="
+            dateAndTimeForm.invalid
+              ? { 'background-color': '#d68585', cursor: 'not-allowed' }
+              : { 'background-color': '#BC1B06' }
+          "
+        >
+          Save & continue
+        </button>
+      </div>
+  </div>
+</form>

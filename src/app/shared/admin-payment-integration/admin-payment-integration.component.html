@@ -1,0 +1,102 @@
+<div class="flex flex-col md:flex-row h-screen">
+    <app-admin-sidebar class="md:w-64"></app-admin-sidebar>
+    <div class="home-container shadow-lg border border-gray-200 rounded-lg flex-1 mt-4 mr-2 overflow-hidden">
+      <div class="relative flex flex-col bg-clip-border h-screen rounded-xl bg-white text-gray-700 w-full shadow-sm shadow-blue-gray-900/5">
+        <div class="dash border-[1px] rounded-t-lg pl-5 flex">
+          <div class="mb-2">
+            <div class="font-bold text-bol">Settings</div>
+            <p>Personalize Your Preferences and Account Settings.</p>
+          </div>
+          <div class="dash-content-right mb-2 flex ml-auto space-x-4 mt-2 xl:mt-2 h-10">
+            <img src="assets/esp/dashboard/bell.png" alt="Bell Icon" class="block" />
+            <div class="relative">
+              <img [src]="profileImageUrl" alt="Avatar" class="block cursor-pointer border rounded-full w-10 h-10" (click)="toggleCard()" />
+              <div *ngIf="showProfileCard" class="absolute right-0 mt-[1rem] w-72 bg-white shadow-md rounded-lg p-6 z-10">
+                <div class="flex items-center mb-4">
+                  <img [src]="profileImageUrl" alt="Navbar Image" class="mr-2 border rounded-full w-10 h-10" />
+                  <div>
+                    <h3 class="text-lg medium">{{fullName}}</h3>
+                    <p class="text-xs text-gray-500">{{email}}</p>
+                  </div>
+                </div>
+                <hr class="bg-gray-500 border-2 dark:bg-gray-800 dark:border-gray-700 mb-4" />
+                <button class="flex items-center text-sm text-gray-500" (click)="accountSettings()">
+                  <img src="assets/esp/dashboard/settings.png" class="w-4 h-4 mr-2" />
+                  Account settings
+                </button>
+              </div>
+            </div>
+            <p class="block pt-2 h-8">
+              {{fullName}}
+            </p>
+            <button class="h-8 pt-3">
+              <img src="assets/esp/dashboard/down.png" alt="Down Icon" class="block mr-8" />
+            </button>
+          </div>
+        </div>
+  
+        <div class="tabs-container pl-8 pt-4">
+          <div class="tabs border-b-2 border-gray-200 inline-block">
+            <h3 [routerLink]="['/admin-settings']" class="tab text-[14px] cursor-pointer" [ngClass]="{'active': activeTab === 'account-settings'}" (click)="setActiveTab('account-settings')">Account settings</h3>
+            <h3 class="tab text-[14px] px-4 py-2 cursor-pointer" [ngClass]="{'active': activeTab === 'integrations'}" (click)="setActiveTab('integrations')">Integrations</h3>
+          </div>
+        </div>
+      
+        <div class="mx-8 mt-8 mb-4">
+          <div class="w-full mb-8">
+            <h2 class="text-lg tracking-tight font-bold text-gray-900 lg:text-md text-left">
+              Payment gateway
+            </h2>
+            <p class="font-light text-sm text-gray-400 lg:text-sm text-left">
+              Supercharge your workflow and connect the tool you use every day.
+            </p>
+          </div>
+        
+          <div class="space-y-8">
+            <div class="flex justify-between items-center border-b pb-4">
+              <div class="flex items-center space-x-4">
+                <svg width="49" height="16" viewBox="0 0 49 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.0713 15.2335L19.5155 0.890625H23.4248L20.9789 15.2335H17.0713Z" fill="#0E4595"/>
+                  <path d="M35.1028 1.20006C34.3284 0.909479 33.1147 0.597656 31.599 0.597656C27.7361 0.597656 25.0151 2.54296 24.9919 5.33098C24.9701 7.3919 26.9344 8.5416 28.4174 9.22767C29.9391 9.93081 30.4507 10.3791 30.4433 11.0068C30.4336 11.9683 29.2281 12.4074 28.1044 12.4074C26.5398 12.4074 25.7085 12.19 24.4245 11.6546L23.9207 11.4266L23.3721 14.6374C24.2852 15.0379 25.9736 15.3846 27.7269 15.4027C31.8364 15.4027 34.5042 13.4796 34.5346 10.5023C34.5491 8.87064 33.5076 7.62906 31.2521 6.60538C29.8857 5.94188 29.0489 5.49913 29.0577 4.82727C29.0577 4.2311 29.7661 3.59361 31.2967 3.59361C32.575 3.57375 33.5011 3.85253 34.2227 4.14311L34.5729 4.30862L35.1028 1.20006Z" fill="#0E4595"/>
+                  <path d="M45.1629 0.890625H42.1422C41.2063 0.890625 40.506 1.14603 40.095 2.08004L34.2891 15.2242H38.3943C38.3943 15.2242 39.0654 13.457 39.2172 13.0689C39.6658 13.0689 43.6539 13.075 44.224 13.075C44.3409 13.5772 44.6996 15.2242 44.6996 15.2242H48.3272L45.1629 0.890625ZM40.3701 10.1521C40.6935 9.32575 41.9277 6.14268 41.9277 6.14268C41.9047 6.18085 42.2487 5.31227 42.446 4.77376L42.7103 6.01036C42.7103 6.01036 43.4588 9.43404 43.6153 10.1519H40.3701V10.1521Z" fill="#0E4595"/>
+                  <path d="M0.0499416 0.890625L0 1.18899C1.54541 1.56309 2.92569 2.10454 4.13413 2.7781L7.603 15.2105L11.7393 15.206L17.894 0.890625H13.7525L9.92521 10.6714L9.51752 8.68366C9.49842 8.62224 9.47766 8.56072 9.45641 8.49906L8.12588 2.10153C7.8893 1.19331 7.20297 0.922276 6.35388 0.890625H0.0499416Z" fill="#0E4595"/>
+                </svg>                    
+                <div>
+                  <span class="text-gray-900">VISA</span>
+                  <span class="text-gray-500 block">Embed file previews in projects.</span>
+                </div>
+              </div>
+              <div class="flex items-center space-x-4">
+                <input type="checkbox" class="toggle-checkbox" checked>
+              </div>
+            </div>              
+            <div class="flex justify-between items-center border-b pb-4">
+              <div class="flex items-center space-x-4">
+                <svg width="48" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_5511_27293)">
+                  <path d="M24.0002 0C10.7455 0 0.000244141 5.37268 0.000244141 12C0.000244141 18.6273 10.7455 23.9999 24.0002 23.9999C37.255 23.9999 48.0002 18.6272 48.0002 12C48.0002 5.37258 37.255 0 24.0002 0ZM24.0002 22.1055C11.7917 22.1055 1.89479 17.5811 1.89479 12C1.89479 6.4188 11.7918 1.89445 24.0002 1.89445C36.2088 1.89445 46.1057 6.4188 46.1057 12C46.1057 17.5811 36.2087 22.1055 24.0002 22.1055ZM20.9736 9.89471V7.99987H27.7442V9.89471H25.3067V16H23.4115V9.89471H20.9736ZM35.9169 7.99987V16.0001H34.0225L30.5863 11.2376V16.0001H28.6918V7.99987H30.5862L34.0224 12.7624V7.99987H35.9169ZM12.0272 16.0001V7.99987H13.9217L16.0266 11.2376L18.1314 7.99987H20.0252V16.0001H18.1314V11.475L16.6944 13.6838H15.3587L13.9217 11.475V16.0001H12.0272Z" fill="black"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_5511_27293">
+                  <rect width="48" height="24" fill="white"/>
+                  </clipPath>
+                  </defs>
+                </svg>   
+                <div>
+                  <span class="text-gray-900">MTN MOMO</span>
+                  <span class="text-gray-500 block">Build custom automations and integrations with other apps.</span>
+                </div>
+              </div>
+              <div class="flex items-center space-x-4">
+                <input type="checkbox" class="toggle-checkbox" check>
+              </div>
+            </div>              
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  

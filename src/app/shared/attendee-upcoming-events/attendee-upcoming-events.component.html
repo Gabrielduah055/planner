@@ -1,0 +1,22 @@
+<div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 gap-5 2xl:gap-10 w-full" role="button">
+  <div *ngFor="let event of upcomingEvents" class="relative">
+    <div class="bg-white border rounded-lg overflow-hidden flex flex-col h-full onhover" [routerLink]="['/attendee-preview/'+ event.eventId]">
+      <div class="relative p-4">
+        <img class="event-img w-full h-[160px] object-cover rounded-md" [src]="event.eventImageUrl" alt="event flyer image" >
+      </div>
+      <div class="flex justify-between mb-1">
+        <p class="text-gray-600 pl-4 flex-shrink-0"><img src="assets/esp/dashboard/img-icon.png" alt="img Icon" class="inline-block mr-2">{{event.organizerFullName}}</p>
+      </div>
+      <div class="pl-4 flex flex-col flex-grow">
+        <h2 class="text-lg mb-1 font-semibold text-gray-800 truncate">{{ event.eventTitle }}</h2>
+        <p class="text-gray-600 mb-1 flex-grow truncate" style="max-width: 186px;">{{ event.eventSummary }}</p>
+        <div class="event-details mt-1">
+          <p class="text-gray-600 mb-1 truncate"><img src="assets/esp/dashboard/location.png" alt="Location Icon" class="inline-block mr-2">{{ event.venueLocation }}</p>
+          <p class="text-gray-600 mb-1 truncate"><img src="assets/esp/dashboard/date.png" alt="Date Icon" class="inline-block mr-2">{{ event.eventStartDate | customDate: 'full' }}</p>
+          <p class="text-gray-600 mb-2 truncate"><img src="assets/esp/dashboard/ticket.png" alt="Amount Icon" class="inline-block mr-2">{{ event.ticketStatus }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

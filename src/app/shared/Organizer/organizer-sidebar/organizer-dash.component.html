@@ -1,0 +1,80 @@
+<div class="fixed flex flex-col bg-clip-border bg-[#F9FAFB] rounded-xl text-gray-700 h-screen w-full max-w-[20rem] p-4 shadow-sm shadow-blue-gray-900/5">
+  <div class="mb-5 p-4">
+    <div class="flex cursor-pointer items-center justify-center mb-6 mt-0 -ml-10">
+      <img src="assets/esp/logo.png" alt="Event Vista Logo" class="mr-2" />
+      <h2 class="font-bold text-[24.59px]">
+        Event  <span class="text-red-700"> Vista </span>
+      </h2>
+    </div>
+  </div>
+  <nav class="-mt-10 -ml-4 flex flex-col gap-1 min-w-[240px] pl-4 font-sans text-base font-normal text-gray-700 flex-grow">
+    <div
+      role="button"
+      tabindex="0"
+      routerLink="/org-dash"
+      [ngClass]="{ 'active': isActive('/org-dash') }"
+      class="flex items-center w-full p-3 text-start leading-tight transition-all outline-none rounded-none"
+    >
+      <div class="grid place-items-center mr-4">
+          <img src="assets/esp/dashboard/bar-chart-square-02.png" alt="">
+      </div>
+      Dashboard
+    </div>
+  
+    <div
+      role="button"
+      tabindex="0"
+      routerLink="/org-event"
+      [ngClass]="{ 'active': isActive('/org-event') }"
+      class="flex items-center w-full p-3 text-start leading-tight transition-all outline-none rounded-none"
+    >
+      <div class="grid place-items-center mr-4">
+          <img src="assets/esp/dashboard/layers-three-01.png" alt="">
+      </div>
+      Events
+    </div>
+
+    <div
+      role="button"
+      tabindex="0"
+      routerLink="/org-users"
+      [ngClass]="{ 'active': isActive('/org-users') }"
+      class="flex items-center w-full p-3 text-start leading-tight transition-all outline-none rounded-none"
+    >
+      <div class="grid place-items-center mr-4">
+          <img src="assets/esp/dashboard/user.png" alt="">
+      </div>
+      Users
+    </div>
+  
+    <div
+      (click)="showLogoutConfirmation()"
+      role="button"
+      tabindex="0"
+      class="mt-auto flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all"
+    >
+      <div class="grid place-items-center mr-4">
+        <img src="assets/esp/dashboard/logout.png" alt="Event Vista Logo" class="-mr-2" />
+      </div>
+      {{logOut}}
+    </div>
+  </nav>
+
+  <div *ngIf="isLogoutModalVisible" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+      <div class="logout text-left">
+        <h3 class="mb-2">Log Out</h3>
+        <p>
+          Are you sure you want to log out? By logging out, <br>
+          you will be securely logged out of the system and <br>
+          your session will be ended.
+        </p>
+      </div>      
+      <div class="mt-4 flex justify-center">
+        <button (click)="cancelLogout()" class="bg-white border border-gray-400 text-gray-800 py-2 px-4 rounded-lg mr-2">Cancel</button>
+        <button (click)="confirmLogout()" class="bg-red-600 text-white py-2 px-4 rounded-lg">Log Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+  

@@ -1,0 +1,51 @@
+.custom-select {
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
+    background-position: right center; 
+    background-repeat: no-repeat;
+    padding-right: 2.5rem; 
+}
+
+button.active {
+    background-color: #FFF4ED;
+    color: #BC1B06;
+    font-weight: bold;
+}
+
+.status-wrapper{
+    border-radius: 20px;
+}
+
+.active-button {
+    width: 100%;
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+  
+.hover-button {
+    width: 100%;
+    background-color: #e5e7eb; 
+    color: #111827; 
+}
+
+.clicked {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+.status-dot {
+    font-size: 1.5rem;
+}
+
+.bg-opacity-75 {
+    backdrop-filter: blur(5px);
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(247, 10, 10);
+    text-decoration: none;
+    cursor: pointer;
+}
+

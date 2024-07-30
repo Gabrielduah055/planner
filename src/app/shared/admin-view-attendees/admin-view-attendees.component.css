@@ -1,0 +1,8 @@
+.custom-select {
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
+    background-position: right center; 
+    background-repeat: no-repeat;
+    padding-right: 2.5rem; 
+}

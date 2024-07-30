@@ -1,0 +1,329 @@
+<div
+  class="2xl:font-inter xl:font-inter 2xl:bg-cover 2xl:h-[100vh] md:h-[100vh] lg:bg-cover lg:h-[170vh]"
+  style=" background-image: url({{signupPageImages.backgroundImage}}); background-size: cover;  ">
+  <div>
+    <div>
+      <div
+        class="container text-white absolute mt-[300px] lg:pl-10 lg:text-left 2xl:text-left lg:text-[48px]"
+      >
+        <p
+          class="w-[700px] leading-[60px] font-bold 2xl:pl-36 2xl:w-[900px] 2xl:font-bold xl:font-bold"
+        >
+          {{ signupPageTexts.mainHeading }}
+        </p>
+
+        <p
+          class="lg:text-[12px] w-[532px] h-[56px] leading-5 2xl:pl-36 2xl:w-[800px]"
+        >
+          {{ signupPageTexts.subHeading }}
+        </p>
+      </div>
+
+      <form
+        ngNativeValidate
+        [formGroup]="registrationForm"
+        (ngSubmit)="onSubmit()"
+        class="font-normal sm:rounded-none mx-auto w-[430px] leading-8 bg-white pl-8 pr-8 2xl:mt-2 pt-5 lg:rounded-xl relative lg:absolute lg:top-5 lg:right-12 2xl:rounded-xl 2xl:right-14"
+      >
+        <div
+          class="2xl:mt-3 cursor-pointer flex items-center justify-center mb-6 mt-5"
+          (click)="Home()"
+        >
+          <img src="assets/esp/logo.png" alt="Event Vista Logo" class="mr-2" />
+          <h2
+            class="2xl:pb-3 xl:pb-3 2xl:[24.59px] font-bold text-[24.59px] pt-3 text-[#000000] font-inter"
+          >
+            {{ signupPageTexts.event }}
+            <span class="text-red-700">{{ signupPageTexts.vista }} </span>
+          </h2>
+        </div>
+        <div></div>
+
+        <h2
+          class="text-lg font-bold text-center mt-0 text-[24px] mb-5 2xl:text-[#344054]"
+        >
+          {{ signupPageTexts.signup }}
+        </h2>
+        <p class="mb-7 text-center text-[#667085] leading-6">
+          {{ signupPageTexts.readyToStart }}<br />
+          {{ signupPageTexts.sigupNow }}
+        </p>
+
+        <div class="absolute right-10 -mt-[7px] text-[12px]"></div>
+
+        <div class="mb-2">
+          <label
+            for="countries"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >{{ signupPageTexts.signupAs }}</label
+          >
+          <select
+            required
+            (change)="onRoleChange($event)"
+            id=""
+            formControlName="role"
+            class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+          >
+            <option value="" selected disabled>Choose...</option>
+            <option value="ORGANIZER" [ngValue]="'ORGANIZER'">
+              {{ signupPageTexts.organizer }}
+            </option>
+            <option value="ATTENDEE" [ngValue]="'ATTENDEE'">
+              {{ signupPageTexts.attendee }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-2">
+          <label
+            for="name"
+            class="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Full Name
+            <span *ngIf="registrationForm.get('fullName')?.errors?.['required']"
+              >*</span
+            >
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            formControlName="fullName"
+            class="shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            placeholder="Enter your name here"
+            required
+          />
+          <div
+            class="text-red-600 absolute -mt-2 text-[10px]"
+            *ngIf="
+              registrationForm.get('fullName')?.invalid &&
+              (registrationForm.get('fullName')?.touched ||
+                registrationForm.get('fullName')?.dirty)
+            "
+          >
+            <span *ngIf="registrationForm.get('fullName')?.errors?.['required']"
+              >Field is required,
+            </span>
+            <span *ngIf="registrationForm.get('fullName')?.errors?.['minlength']"
+              >Min 6 Characters Required,
+            </span>
+            <span
+              *ngIf="registrationForm.get('fullName')?.errors?.['fullNameError']"
+            >
+              {{registrationForm.get('fullName')?.errors?.['fullNameError']}}</span
+            >
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label
+            for="email"
+            class="block mb-2 text-sm font-medium text-gray-900 mt-5"
+            >Email*</label
+          >
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="shadow-sm bg-white-50 border border-gray-300 mt-3 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            placeholder="Enter your email address"
+            required
+          />
+          <div
+            class="text-red-600 absolute -mt-2 text-[10px]"
+            *ngIf="
+              registrationForm.get('email')?.invalid &&
+              (registrationForm.get('email')?.touched ||
+                registrationForm.get('email')?.dirty)
+            "
+          >
+            <span *ngIf="registrationForm.get('email')?.errors?.['required']"
+              >Field is required</span
+            >
+            <span *ngIf="registrationForm.get('email')?.errors?.['email']"
+              >Input valid email address</span
+            >
+          </div>
+        </div>
+
+        <div class="flex space-x-2 mt-4" *ngIf="!isOrganizer">
+          <div class="">
+            <label for="" class="block mb-2 text-sm font-medium text-gray-900"
+              >Gender</label
+            >
+            <select
+              required
+              id=""
+              formControlName="gender"
+              class="bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-[200px] p-2.5"
+            >
+              <option value="" selected disabled>Choose...</option>
+              <option value="MALE" [ngValue]="'MALE'">MALE</option>
+              <option value="FEMALE" [ngValue]="'FEMALE'">FEMALE</option>
+            </select>
+            <div
+              class="text-red-600 absolute -mt-2 text-[10px]"
+              *ngIf="
+                registrationForm.get('gender')?.invalid &&
+                (registrationForm.get('gender')?.touched ||
+                  registrationForm.get('gender')?.dirty)
+              "
+            >
+              <span *ngIf="registrationForm.get('gender')?.errors?.['required']"
+                >Gender is required</span
+              >
+            </div>
+          </div>
+
+          <div class="-mt-1">
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Date of Birth</label
+            >
+            <input
+              required
+              type="date"
+              max="9999-12-31"
+              id="name"
+              formControlName="dateOfBirth"
+              class="shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-[160px] p-2.5"
+              placeholder="35"
+            />
+            <div
+              class="text-red-600 absolute -mt-2 text-[10px]"
+              *ngIf="
+                registrationForm.get('dateOfBirth')?.invalid &&
+                (registrationForm.get('dateOfBirth')?.touched ||
+                  registrationForm.get('dateOfBirth')?.dirty)
+              "
+            >
+              <span
+                *ngIf="registrationForm.get('dateOfBirth')?.errors?.['required']"
+                >Date of birth is required</span
+              >
+              <span *ngIf="registrationForm.get('dateOfBirth')?.errors?.['minAge']">
+                Must be at least 12 years old
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-2 relative">
+          <label
+            for="password"
+            class="block mb-2 text-sm font-medium text-gray-900 mt-5"
+            >Password*</label
+          >
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            class="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            placeholder="Enter password here"
+            required
+          />
+          <img
+            *ngIf="!showPassword"
+            src="assets/esp/close-pass.png"
+            alt="Toggle Password Visibility"
+            class="size-10 absolute xl:right-8 top-7 cursor-pointer"
+            (click)="togglePasswordVisibility()"
+          />
+          <img
+            *ngIf="showPassword"
+            src="assets/esp/open-pass.png"
+            alt="Toggle Password Visibility"
+            class="size-10 absolute xl:right-8 top-7 cursor-pointer"
+            (click)="togglePasswordVisibility()"
+          />
+          <div
+            class="text-red-600 absolute -mt-2 text-[10px]"
+            *ngIf="
+              registrationForm.get('password')?.invalid &&
+              (registrationForm.get('password')?.touched ||
+                registrationForm.get('password')?.dirty)
+            "
+          >
+            <span *ngIf="registrationForm.get('password')?.errors?.['required']"
+              >Password is required</span
+            >
+            <span
+              *ngIf="registrationForm.get('password')?.errors?.['passwordError']"
+            >
+              {{ registrationForm.get('password')?.errors?.['passwordError'] }}
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3 relative">
+          <label
+            for="confirmPassword"
+            class="block mb-2 text-sm font-medium text-gray-900 mt-5"
+            >Confirm Password*</label
+          >
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            class="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="Re-enter password"
+            required
+          />
+          <img
+            *ngIf="!showConfirmPassword"
+            src="assets/esp/close-pass.png"
+            alt="Toggle Confirm Password Visibility"
+            class="size-10 absolute xl:right-8 top-7 cursor-pointer"
+            (click)="toggleConfirmPasswordVisibility1()"
+          />
+          <img
+            *ngIf="showConfirmPassword"
+            src="assets/esp/open-pass.png"
+            alt="Toggle Confirm Password Visibility"
+            class="size-10 absolute xl:right-8 top-7 cursor-pointer"
+            (click)="toggleConfirmPasswordVisibility1()"
+          />
+          <div
+            class="text-red-600 absolute -mt-2 text-[10px]"
+            *ngIf="
+              registrationForm.get('confirmPassword')?.invalid &&
+              (registrationForm.get('confirmPassword')?.touched ||
+                registrationForm.get('confirmPassword')?.dirty)
+            "
+          >
+            <span
+              *ngIf="registrationForm.get('confirmPassword')?.errors?.['required']"
+              >Confirmation password is required</span
+            >
+            <span
+              *ngIf="registrationForm.get('confirmPassword')?.errors?.['passwordMismatch']"
+              >Passwords must be the same</span
+            >
+            <span *ngIf="registrationForm.get('confirmPassword')?.errors?.['minlength']"
+              >Min 8 Characters Required,
+            </span>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="cursor-pointer hover:bg-[#cc210a] text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full mt-2 h-11"
+          [disabled]="!registrationForm.valid"
+          
+          [ngStyle]="!registrationForm.valid ? {'background-color': '#d68585', 'cursor': 'not-allowed'} : {'background-color': '#BC1B06'}"
+          > submit
+        </button>
+        <p
+          (click)="Login()"
+          class="text-[#667085] font-medium text-[14px] cursor-pointer pt-5 pb-8 text-center"
+        >
+          {{ signupPageTexts.accountAlready }}
+          <span class="cursor-pointer text-[#BC1B06] font-medium text-[14px]">
+            {{ signupPageTexts.logIn }}
+          </span>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

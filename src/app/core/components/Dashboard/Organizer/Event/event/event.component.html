@@ -1,0 +1,366 @@
+<div
+  class="font-inter relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 sm:h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-sm shadow-blue-gray-900/5 lg:h-[calc(100vh-2rem)] 2xl:h-[calc(100vh-2rem)]"
+>
+  <app-organizer-dash></app-organizer-dash>
+
+  <div
+    class="dash xl:absolute ml-[305px] rounded-t-lg w-full 2xl:absolute 2xl:ml-[305px]  2xl:rounded-t-lg 2xl:w-[1580px] xl:w-[940px]  2xl:h-fit h-auto 2xl:-mb-96 "
+  >
+    <div
+      class="dash border-[1px] rounded-t-lg p-0 pl-5 flex 2xl:border-[1px] 2xl:rounded-t-lg 2xl:p-2 2xl:pl-5 2xl:flex"
+    >
+      <app-organizer-top-bar [heading]="heading" [sub_Heading]="sub_heading">
+      </app-organizer-top-bar>
+    </div>
+
+    <div class="card-all m-0 flex w-4/4 mt-10 ml-8 mr-8">
+      <h3 class="top-24 2xl:top-28 text-[14px] absolute font-semibold">
+        All event
+        <span class="p-3 bg-[#FFF4ED] rounded-full size-2 absolute mt-0 ml-3">
+          <span class="absolute -mt-3 -ml-1 font-bold text-[#BC1B06]">{{
+            filteredSupplier.length
+          }}</span>
+        </span>
+      </h3>
+
+      <div
+        class="searchFilter flex space-x-3 right-56 2xl:top-28 top-24 absolute"
+      >
+        <div class="search mb-2">
+          <img
+            src="assets/esp/dashboard/search.png"
+            alt=""
+            class="absolute mt-3.5 ml-2 w-3"
+          />
+          <input
+            type="text"
+            id="name"
+            class="shadow-sm bg-[white] w-[220px] border border-gray-300 text-gray-900 text-sm rounded-md block p-2.5 pl-7"
+            placeholder="Search"
+            #filter
+            (keyup)="filterData(filter.value, filterByCategory)"
+          />
+        </div>
+
+        <div class="filter mb-2">
+          <img
+            src="assets/esp/dashboard/filter.png"
+            alt=""
+            class="absolute mt-3 ml-2 w-3"
+          />
+
+          <select
+            name=""
+            id=""
+            [(ngModel)]="filterByCategory"
+            (change)="filterData(filter.value, filterByCategory)"
+            class="shadow-sm bg-[white] w-fit border border-gray-300 text-gray-900 text-sm rounded-md block p-2.5 pl-7"
+          >
+            <option value="" selected disabled>Filters</option>
+            <option value="All">All</option>
+            <option value="Free">Free</option>
+            <option value="Paid">Paid</option>
+          </select>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="bg-[#BC1B06] absolute cursor-pointer 2xl:top-28 xl:top-24 text-white font-normal p-2.5 rounded-md w-[164px] right-10"
+        (click)="orgCreateEvent()"
+      >
+        <span>+</span> Create event
+      </button>
+    </div>
+
+    <div class="card-all m-0 flex mt-5 ml-8 mr-8">
+      <div class="card w-full">
+        @if(preload){
+        <div class="mb-10">
+          <app-preload-general></app-preload-general>
+        </div>
+
+        } @if (eventCreated) {
+
+        <div class="2xl:w-3/4 2xl:ml-40  xl:w-3/4 mt-5 2xl:mb-0 xl:mb-20">
+          <div class="xl:w-full 2xl:full">
+            <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
+              <div
+                class="grid sm:grid-cols-3 xl:grid-cols-3  2xl:grid-cols-4  2xl:gap-[350px] x:gap-[400px] xl:-ml-5 xl:gap-[330px] 2xl:-ml-32 2xl:w-full xl:-mt-5 "
+              >
+                <!-- <div *ngFor="let record of records $eventId"class="max-w-sm rounded-md overflow-hidden ml-1 2xl:w-full  xl:mb-[5px] xl:w-[285px] xl:h-[340px] border-[1px] border-gray-300 inline-block py-3 xl:mt-5 px-5"> -->
+                  <div *ngIf="noResultsFound" class="max-w-64 text-[24px] font-medium w-[500px]">
+
+                    <p><span>{{filter.value}}</span>Not Found</p>
+                  </div>
+                <div
+                  *ngFor="let record of displayedSuppliers;  let i = index"
+                  class="xl:flex 2xl:flex  mb-0 2xl:-mb-72 xl:-mb-52 2xl:h-[350px] 2xl:w-[280px] xl:h-[400px]"
+                >
+
+                  <div class="xl:flex xl:gap-5 2xl:-mt-7 xl:-mt-5 " >
+
+                    <div
+                      class="xl:-ml-14 p-3 rounded-lg border-2 hover:shadow-2xl border-r border-b border-l border-gray-400 xl:border-t xl:border-gray-400 bg-white flex flex-col justify-between leading-normal"
+                    >
+                      <img (click)="viewEvent(record.eventId)"
+                        src="{{ record.eventImageUrl }}"
+                        class="cursor-pointer 2xl:w-full 2xl:max-[300px] xl:w-[300px] 2xl:[174px] 2xl:h-[134px] xl:h-[154px] rounded-md mb-3"
+                      />
+                      <div class=" 2xl:-pt-20 2xl:pb-3">
+                        <div class="mb-8">
+                          <div class="flex items-center p-2 w-fit">
+
+
+
+                            <div class="rounded-md border w-[40px] 2xl:pr-1">
+                              <p>
+                                <img
+                                  class="p-1 w-10 h-10 rounded-full mr-4"
+                                  src="{{ record.organizerLogo }}"
+                                />
+                              </p>
+                            </div>
+                            <div class="text-sm flex">
+                              <p class="text-gray-900 font-semibold">
+                                {{ record.venueLocation }}
+                              </p>
+                            </div>
+                            <div class="relative">
+                              <button class="cursor-pointer 2xl:ml-36" (click)="toggleDropdown(i)">
+                                <svg
+                                  class="w-5 h-5 rotate-90 border-1 border-gray-500"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="currentColor"
+                                  viewBox="0 0 16 3"
+                                >
+                                  <path
+                                    d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+                                  />
+                                </svg>
+                              </button>
+                              <div *ngIf="isDropdownVisible[i]" class="absolute bg-white shadow-md mt-2 rounded w-[222px] right-2">
+                                <ul>
+                                  <li class="flex gap-2 items-center px-4 py-2 cursor-pointer hover:bg-gray-100" (click)="orgUpdateEvent(record.eventId)">
+                                    <div>
+                                      <img src="assets/esp/edit-event.svg" alt="edit" srcset="">
+                                    </div>
+                                    <div>Edit event</div>
+                                  </li>
+                                  <li class="flex gap-2 items-center px-4 py-2 cursor-pointer hover:bg-gray-100">
+                                    <div>
+                                      <img src="assets/esp/user-single.svg" alt="view" srcset="">
+                                    </div>
+                                    <div  (click)="viewAttendee(record.eventId)" >View attendees</div>
+                                  </li>
+                                  <li class="flex gap-2 items-center px-4 py-2 cursor-pointer hover:bg-gray-100" (click)="deleteEvent(record.eventId, i)">
+                                    <div>
+                                      <img src="assets/esp/delete.svg" alt="delete" srcset="">
+                                    </div>
+                                    <div>Delete</div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+
+
+                          </div>
+                          <p
+                            class="text-gray-900 font-bold text-lg mb-2 inline-block"
+                          >
+                            {{record.eventTitle}}
+                          </p>
+                          <p class="text-gray-700 text-sm">
+                            {{ record.eventSummary | lowercase |  slice : 0 : 20 }}
+                          </p>
+                          <p class="text-gray-700 text-sm">
+                            {{ record.venueLocation }}
+                          </p>
+
+                          <div class="mt-2">
+                            <div class="flex items-center">
+                              <img
+                                src="assets/esp/location.png"
+                                alt=""
+                                class="size-7 -ml-1"
+                              />
+                              <span class="ml-2">{{
+                                record.venueLocation
+                                  | uppercase
+                                  | slice : 0 : 10
+                              }}</span>
+                            </div>
+                            <div class="flex items-center">
+                              <img
+                                src="assets/esp/start_date.png"
+                                alt=""
+                                class="size-5"
+                              />
+                              @if (record.eventStartDate) {
+
+                              <span class="ml-2">{{
+                                record.eventStartDate
+                              }}</span>
+                              } @else {
+                              <span class="ml-2">
+                                {{ "Date not defined" }}</span
+                              >
+
+                              }
+                            </div>
+                            <div class="flex items-center">
+                              <img
+                                src="assets/esp/ticket_price.png"
+                                alt=""
+                                class="size-5"
+                              />
+                              @if( record.ticketStatus==="Paid"){
+                              <span class="ml-2">
+                                <span>Ghc</span>
+                                {{ record.ticketTiers[0].price }}</span
+                              >
+                              } @else if(record.ticketStatus==="Free") {
+                              <span class="ml-2"> <span>Free</span></span>
+
+                              }
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="w-4/4 shadow-md p-10 bg-white shadow-blue-200/20 mx-36 my-10"
+                >
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        } @else if(records.length < 0) {
+
+        <div>
+          <div class="text-first-event text-center justify-center top-24">
+            <img
+              src="assets/esp/dashboard/spring.png"
+              alt=""
+              class="absolute size-60 xl:ml-12 xl:top-[200px] 2xl:right-[670px] xl:right-[350px] ml-5"
+            />
+
+            <div
+              class="text absolute xl:top-[460px] 2xl:right-[350px] left-80 ml-5 xl:ml-12"
+            >
+              <h2 class="mt-5 font-semibold text-[20.88px]">
+                Create your first event
+              </h2>
+              <p>Create events on this page</p>
+            </div>
+
+            <button
+              type="submit"
+              class="bg-[#BC1B06] mt-96 cursor-pointer text-white font-normal p-2.5 rounded-md w-[164px]"
+              (click)="orgCreateEvent()"
+            >
+              <span>+</span> Create event
+            </button>
+          </div>
+        </div>
+
+        }
+      </div>
+
+
+
+
+
+
+
+    </div>
+
+    <div
+      class="2xl:bottom-auto 2xl:pt-[500px] flex items-center justify-center space-x-36 xl:-mt-80
+     "
+    >
+      <ul
+        class="inline-flex 2xl:space-x-96 2xl:w-full 2xl:p-10 xl:space-x-80 text-sm"
+      >
+        <li>
+          <button
+            class="cursor-pointer flex items-center justify-center px-3 h-8 me-3 text-sm
+            font-medium text-gray-500 bg-white border border-gray-300 rounded-lg
+            hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700
+             dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            (click)="previousPage()"
+          >
+            <svg
+              class="w-3.5 h-3.5 me-2 rtl:rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 5H1m0 0 4 4M1 5l4-4"
+              />
+            </svg>
+            Previous
+          </button>
+        </li>
+
+        <div *ngFor="let _ of pageNumbers(); let i = index">
+          <li>
+            <button
+              class="py-2 px-4 rounded-lg cursor-pointer"
+              [ngStyle]="{
+                'background-color': i + 1 === currenPage ? '#FFE6D5' : '',
+                color: i + 1 === currenPage ? '#E62E05' : ''
+              }"
+              (click)="changePage(i + 1)"
+            >
+              {{ i + 1 }}
+            </button>
+          </li>
+        </div>
+
+        <li>
+          <button
+            class="cursor-pointer flex items-center justify-center px-3 h-8 me-3 text-sm font-medium
+             text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100
+              hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400
+               dark:hover:bg-gray-700 dark:hover:text-white"
+            (click)="nextPage()"
+          >
+            Next
+            <svg
+              class="w-3.5 h-3.5 ms-2 rtl:rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- .....here -->
+  </div>
+</div>

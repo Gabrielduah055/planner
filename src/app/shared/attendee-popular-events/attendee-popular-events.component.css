@@ -1,0 +1,20 @@
+.event-container {
+    overflow: hidden !important;  
+}
+.clicked {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+.custom-select {
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
+    background-position: right center; 
+    background-repeat: no-repeat;
+    padding-right: 2.5rem; 
+}
+.onhover:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s ease-in-out; 
+}

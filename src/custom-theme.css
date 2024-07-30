@@ -1,0 +1,58 @@
+/* custom-theme.css */
+
+
+@import url('../node_modules/@angular/material/prebuilt-themes/indigo-pink.css');
+
+/* Override colors and styles */
+
+.mat-primary .mat-option {
+  color: #3f51b5; /* Indigo primary color */
+}
+
+.mat-accent .mat-option {
+  color: #e91e63; /* Pink accent color */
+}
+
+.mat-warn .mat-option {
+  color: #f44336; /* Red warn color */
+}
+
+/* Add more custom styles as needed */
+
+.custom-theme-wrapper {
+  /* display: contents;  */
+  height: 50px;
+  /* border: 3px green solid; */
+}
+
+
+
+.custom-theme-wrapper .mat-form-field-wrapper {
+  padding-bottom: 0 !important; /* Remove padding to make it more compact */
+}
+
+.custom-theme-wrapper .mat-form-field-flex {
+  height: 6px !important; /* Adjust the height */
+  align-items: center !important; /* Align items center */
+}
+
+
+.custom-theme-wrapper .mat-date-range-input {
+  height: 6px !important; /* Adjust the height */
+}
+
+.custom-theme-wrapper .mat-date-range-input .mat-input-element {
+  padding: 1px 0 !important; /* Adjust padding */
+}
+
+/* Ensure mat-date-range-input has the same height as mat-form-field */
+.custom-theme-wrapper mat-date-range-input .mat-form-field-infix {
+  height: 60px !important;
+}
+
+.custom-theme-wrapper mat-date-range-input {
+  height: 6px !important;
+  align-items: center !important;
+}
+
+

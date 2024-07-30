@@ -1,0 +1,43 @@
+<div class="font-inter flex justify-center items-center h-screen">
+  <form [formGroup]="tokenForm" (ngSubmit)="onSubmit()" class="space-y-4 max-w-md w-full px-4">
+
+    <ng-container *ngIf="isUnauthorized">
+      <app-error [errorMessage]="errorMessage"></app-error>
+    </ng-container>
+    <ng-container *ngIf="isToken">
+      <app-error [errorMessage]="enterValue"></app-error>
+    </ng-container>
+    <ng-container *ngIf="isSubmitted">
+      <app-success [success]="success"></app-success>
+    </ng-container>
+    <ng-container *ngIf="isExpired">
+      <app-error [errorMessage]="expired"></app-error>
+    </ng-container>
+    <ng-container *ngIf="invalidToken">
+      <app-error [errorMessage]="invalid"></app-error>
+    </ng-container>
+    <ng-container *ngIf="isEmail">
+      <app-error [errorMessage]="emailRequired"></app-error>
+    </ng-container>
+    <ng-container *ngIf="isError">
+      <app-error [errorMessage]="Error"></app-error>
+    </ng-container>
+
+    <h2 class="text-3xl font-semibold text-center mb-6">Enter Token</h2>
+
+    <div class="flex justify-center items-center">
+      <input
+        type="number"
+        formControlName="token"
+        class="w-full h-16 px-4 text-4xl border border-gray-300 rounded-md text-center
+        focus:outline-none focus:ring focus:border-blue-300"
+        placeholder="0000"
+      >
+    </div>
+
+    <button type="submit"  class="cursor-pointer bg-[#BC1B06] hover:bg-[#cc210a] text-white font-semibold py-4 px-6
+    rounded-md w-full mt-6">
+      Verify
+    </button>
+  </form>
+</div>

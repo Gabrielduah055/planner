@@ -1,0 +1,4 @@
+1. signup - full name accepting numbers
+2. login - sign in successful or error handling, throwing messages 
+to users
+3. create event -  create event adjustments, and sending of duplication data to the backend

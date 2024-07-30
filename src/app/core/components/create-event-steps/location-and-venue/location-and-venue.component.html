@@ -1,0 +1,364 @@
+<form [formGroup]="locationAndVenueForm">
+    <img src="{{ locationImg }}" alt="" />
+
+              <div
+                class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+              >
+                <p>Basic information</p>
+                <p class="text-[#BC1B06]">Location & Venue layout</p>
+                <p>Date & time</p>
+                <p>Event image & ticket</p>
+              </div>
+
+              <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+                <h2 class="font-bold">Location</h2>
+                <p
+                  class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                >
+                  Help people in the area discover your event and let attendees
+                  know where to show up.
+                </p>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Venue Location*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="venueLocation"
+                    placeholder="Enter location here"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      locationAndVenueForm.get('venueLocation')?.invalid &&
+                      (locationAndVenueForm.get('venueLocation')?.touched ||
+                        locationAndVenueForm.get('venueLocation')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="locationAndVenueForm.get('venueLocation')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Address line 1*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    placeholder="Enter street address of the venue or event location"
+                    formControlName="venueAddress1"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      locationAndVenueForm.get('venueAddress1')?.invalid &&
+                      (locationAndVenueForm.get('venueAddress1')?.touched ||
+                        locationAndVenueForm.get('venueAddress1')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="locationAndVenueForm.get('venueAddress1')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Address line 2</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="venueAddress2"
+                    placeholder="Enter location here"
+                  />
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >City*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="city"
+                    placeholder="Enter city or locality where event will be held"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      locationAndVenueForm.get('city')?.invalid &&
+                      (locationAndVenueForm.get('city')?.touched ||
+                        locationAndVenueForm.get('city')?.dirty)
+                    "
+                  >
+                    <span *ngIf="locationAndVenueForm.get('city')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >State/Province/Region*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="stateProvinceRegion"
+                    placeholder="Enter state, province or region where event will be held"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      locationAndVenueForm.get('stateProvinceRegion')?.invalid &&
+                      (locationAndVenueForm.get('stateProvinceRegion')?.touched ||
+                        locationAndVenueForm.get('stateProvinceRegion')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="locationAndVenueForm.get('stateProvinceRegion')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Country*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="country"
+                    placeholder="Enter country where event will be held"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      locationAndVenueForm.get('country')?.invalid &&
+                      (locationAndVenueForm.get('country')?.touched ||
+                        locationAndVenueForm.get('country')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="locationAndVenueForm.get('country')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <h2 class="font-bold">Venue layout</h2>
+                  <p
+                    class="font-normal mt-3 text-[14px] text-[#667085] w-[550px]"
+                  >
+                    Add photo to show attendees how your venue layout will be
+                    example seating types
+                  </p>
+
+                  <div
+                    class="bg-gray-100 p-4 rounded-lg w-[630px] h-[316px] 2xl:w-[800px] relative"
+                  >
+                    <img
+                      *ngIf="venueImageUrl || venueAndLocationObject?.venueLayoutUrl"
+                      [src]="venueImageUrl || venueAndLocationObject.venueLayoutUrl"
+                      alt="Uploaded Image"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div
+                      class="flex items-center justify-center absolute inset-0"
+                    >
+                      <label for="seatingType" class="relative cursor-pointer">
+                        <div class="flex w-max 2xl:ml-14 xl:ml-16">
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/img-icon.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Upload image</span>
+                          </div>
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/auto-cad.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Design with CAD</span>
+                          </div>
+                        </div>
+                        <input
+                          type="file"
+                          id="venueLayoutUrl"
+                          enctype="multipart/form-data"
+                          class="absolute inset-0 opacity-0 cursor-pointer z-20"
+                          (change)="onVenueImageChange($event)"
+                          accept="image/*"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <ul
+                    class="mt-5 flex space-x-5 xl:space-x-5 text-[12px] xl:ml-3"
+                  >
+                    <li class="list-disc">
+                      Recommended image size: 2160 x 1080px
+                    </li>
+                    <li class="list-disc">Maximum file size 10MB</li>
+                    <li class="list-disc">Supported image file: JPG or PNG</li>
+                  </ul>
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      locationAndVenueForm.get('venueLayout')?.invalid &&
+                      (locationAndVenueForm.get('venueLayout')?.touched ||
+                        locationAndVenueForm.get('venueLayout')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="locationAndVenueForm.get('venueLayout')?.errors?.['venueLayout']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-5 2xl:w-[800px] w-[620px]">
+                  <h2 class="font-bold">Seating type</h2>
+                  <p
+                    class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                  >
+                    Show attendees how your venue seating type will be
+                  </p>
+
+                  <div
+                    class="bg-gray-100 p-4 rounded-lg w-[630px] h-[316px] 2xl:w-[800px] relative"
+                  >
+                    <img
+                      *ngIf="seatingTypeUrl || venueAndLocationObject?.seatingTypeUrl"
+                      [src]="seatingTypeUrl || venueAndLocationObject.seatingTypeUrl"
+                      alt="Uploaded Image"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div
+                      class="flex items-center justify-center absolute inset-0"
+                    >
+                      <label for="seatingType" class="relative cursor-pointer">
+                        <div class="flex w-max 2xl:ml-14 xl:ml-16">
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/img-icon.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Upload image</span>
+                          </div>
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/auto-cad.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Design with toptableplanner</span>
+                          </div>
+                        </div>
+                        <input
+                          type="file"
+                          id="seatingTypeUrl"
+                          class="absolute inset-0 opacity-0 cursor-pointer z-20"
+                          (change)="onSeatingImageChange($event)"
+                          enctype="multipart/form-data"
+                          accept="image/*"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <ul
+                    class="mt-5 flex space-x-5 xl:space-x-5 text-[12px] xl:ml-3"
+                  >
+                    <li class="list-disc">
+                      Recommended image size: 2160 x 1080px
+                    </li>
+                    <li class="list-disc">Maximum file size 10MB</li>
+                    <li class="list-disc">Supported image file: JPG or PNG</li>
+                  </ul>
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      locationAndVenueForm.get('seatingType')?.invalid &&
+                      (locationAndVenueForm.get('seatingType')?.touched ||
+                        locationAndVenueForm.get('seatingType')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="locationAndVenueForm.get('seatingType')?.errors?.['seatingType']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                  <div
+                    class="flex gap-5 mb-10 pt-1 justify-end mt-5 2xl:w-[800px] w-[620px]"
+                  >
+                    <button
+                      type="button"
+                      class="bg-transparent border-[1px] text-black p-2 cursor-pointer font-normal rounded-md max-w-max"
+                      (click)="prevStep()"
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      (click)="saveAndContinue()"
+                      type="button"
+                      class="p-2 cursor-pointer text-white font-normal rounded-md w-[164px]"
+                      [disabled]="locationAndVenueForm.invalid"
+                      [ngStyle]="locationAndVenueForm.invalid ? {'background-color': '#d68585', 'cursor': 'not-allowed'} : {'background-color': '#BC1B06'}"
+                    >
+                      Save & continue
+                    </button>
+                  </div>
+              </div>
+</form>

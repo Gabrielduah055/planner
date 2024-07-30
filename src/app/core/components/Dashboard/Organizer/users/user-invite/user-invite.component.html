@@ -1,0 +1,59 @@
+
+<div  #inviteModal class="font-inter absolute inset-0 bg-[#344054]/45 overflow-hidden" style="background-size: cover; background-position: unset">
+  <div class="h-screen flex items-center justify-center">
+    <div class="justify-center items-center mb-0 pb-0 h-[100vh] relative right-0 lg:h-[calc(100vh-2rem)]">
+      <form (ngSubmit)="onSubmit()" [formGroup]="OrganInvite" class="sm:rounded-none w-[430px] pt-10 pb-10 leading-8 bg-white pl-8 pr-8 lg:rounded-xl relative lg:absolute lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2">
+        <button (click)="closeModal()" type="button" class="absolute right-10">
+<img src="assets/esp/org-dash/org-close.png" alt="" srcset="">
+        </button>
+
+
+
+        @if ( success) {
+          <app-success [success] = "successSent" ></app-success>
+
+        } @else if(allFieldBool){
+          <app-error [errorMessage] = "allFields"></app-error>
+
+        } @else if( error) {
+          <app-error [errorMessage] = "errorMessage"></app-error>
+
+        }
+
+
+
+        <div class="mb-2">
+          <h2 class="text-[#101828] fsize-[18px] font-semibold">Invite User</h2>
+        </div>
+
+        <div class="mb-2">
+          <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+          <input type="text" id="name" formControlName="fullName" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:text-white" placeholder="Enter your name here" required>
+        </div>
+
+        <div class="mb-2">
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-5">Email</label>
+          <input type="email" id="email" formControlName="email" class="shadow-sm bg-gray-50 border border-gray-300 mt-3 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:text-white" placeholder="Enter your email address" required>
+        </div>
+
+        <div class="mb-2">
+          <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+          <select id="countries" formControlName="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:text-white">
+            <option value="CO_ORGANIZER" selected>CO_ORGANIZER</option>
+          </select>
+        </div>
+
+        <div class="flex justify-between w-full">
+          <div class="mt-5 w-max space-x-5">
+            <button (click)="closeModal()" type="button" class="bg-[#ffffff] border-x-2 border-y-2 cursor-pointer text-black font-normal p-2.5 pt-2 pb-2 rounded-md w-[164px]">
+              Cancel
+            </button>
+            <button type="submit" class="bg-[#BC1B06] cursor-pointer text-white font-normal p-2.5 pt-2 pb-2 rounded-md w-[164px]">
+              Invite user
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

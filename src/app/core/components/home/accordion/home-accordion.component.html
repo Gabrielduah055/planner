@@ -1,0 +1,11 @@
+<div *ngFor = "let faq of constant.faqs" class="container border-b">
+    <button class = 'w-full flex justify-between my-3' (click) = "toggle(faq)" >
+        <span class="font-medium text-sm text-slate-700">{{faq.question}}</span>
+        <span [ngClass]="{'rotate-180':faq.open}" class="transition-transform transform">
+            <img [src]="faq.open ? '../../../../../assets/esp/dashboard/close.svg' :'../../../../assets/esp/dashboard/open.svg'" alt="" class="w-5">
+        </span>
+    </button>
+    <div *ngIf="faq.open" class="text-gray-700 text-sm font-normal my-4">
+        <p>{{faq.answer}}</p>
+    </div>
+</div>

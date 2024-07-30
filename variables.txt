@@ -1,0 +1,32 @@
+eventTitle-
+organizationCategory-
+organizerName-
+organizerLogo-
+organizerEmail-
+tags-
+
+venueLocation-
+venueAddress1 -
+venueAddress2-
+city -
+stateProvinceRegion -
+country-
+venueLayout -
+seatingType -
+
+
+eventStartDate-
+eventStartTime -
+eventEndDate -
+eventEndTime -
+displayStartTime -
+displayEndTime -
+
+
+eventImage -
+eventSummary -
+eventPrice -
+ticketType-
+ticketQuantity-
+
+

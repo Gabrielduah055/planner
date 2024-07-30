@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  .h-screen {
+    height: 100vh;
+  }
+  
+  .fixed {
+    position: fixed;
+  }
+  
+  .h-full {
+    height: 100%;
+  }
+  
+  .overflow-y-auto {
+    overflow-y: auto;
+}

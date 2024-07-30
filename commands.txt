@@ -1,0 +1,53 @@
+
+
+npm install -g @angular/cli
+ng new ESP-frontend
+ng serve
+
+develop branch:
+git checkout feature/registration-login
+git checkout feature/login
+
+git checkout feature/registration-login
+git add .
+git commit -m " Registration and login feature with validation"
+git push --set-upstream origin feature/registration-login
+
+ng generate module app --flat
+npm i ngx-chips
+
+ng generate environments
+
+
+create from branch feature/create-event
+_______________________
+
+git checkout -b feature/org-admin-branch feature/create-event
+git checkout -b feature/filter-event-pagination feature/org-admin-branch
+git checkout -b feature/filter-event-pagination feature/event-pagination-update
+
+git checkout -b feature/organizer-create-event-tier feature/running-fixes
+
+
+develop(current branches)
+    -feature/create-event
+    -feature/org-admin-branch
+    -feature/filter-event-pagination
+
+
+check for standard in codes
+____________________
+npm install -g eslint
+eslint --init
+npm run lint
+
+
+charts
+npm install chart.js
+
+
+I have recent changes in the lost-changes branch i want them to override my working branch
+
+git checkout working branch
+git reset --hard lost-changes
+git push -force origin feature/filter-event-pagination

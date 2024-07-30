@@ -1,0 +1,266 @@
+<form [formGroup]="basicInformationForm" enctype="multipart/form-data">
+  <img src="{{ eventLink }}" alt="" />
+
+  <div
+    class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+  >
+    <p class="text-[#BC1B06]">{{ basic }}</p>
+    <p>{{ locVenueLayout }}</p>
+    <p>{{ dateTime }}</p>
+    <p>{{ eventTicket }}</p>
+  </div>
+
+  <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+    <h2 class="font-bold">{{ basic }}</h2>
+    <p class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]">
+      Name your events and tell event goers why they should come. Add details
+      that highlight what makes it unique
+    </p>
+
+    <div class="one-form">
+      <div class="mt-5">
+        <div class="labels flex 2xl:space-x-[330px] space-x-60">
+          <label for="name" class="block mb-2 text-sm font-medium text-gray-900"
+            >Event Title*</label
+          >
+          <label
+            for="orgEmail"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Organization Category*</label
+          >
+        </div>
+
+        <div class="flex 2xl:w-[800px] w-[620px]">
+          <input
+            type="text"
+            id="name"
+            class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block w-[620px] p-1.5"
+            formControlName="eventTitle"
+            placeholder="Enter event title here"
+          />
+          <div
+            class="text-red-600 absolute mt-8 text-[10px]"
+            *ngIf="
+              basicInformationForm.get('eventTitle')?.invalid &&
+              (basicInformationForm.get('eventTitle')?.touched ||
+                basicInformationForm.get('eventTitle')?.dirty)
+            "
+          >
+            <span
+              *ngIf="basicInformationForm.get('eventTitle')?.errors?.['required']"
+              >Field is required</span
+            >
+            <span
+              *ngIf="basicInformationForm.get('eventTitle')?.errors?.['minlength']"
+              >Min 6 Characters Required</span
+            >
+          </div>
+
+          <select
+            id="name"
+            class="pl-3 ml-2 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-[620px] p-1.5"
+            formControlName="eventCategory"
+          >
+            <option value="Business" [ngValue]="'Business'">Business</option>
+            <option value="Technology" [ngValue]="'Technology'">
+              Technology
+            </option>
+            <option value="Arts & culture" [ngValue]="'Technology'">
+              Arts & culture
+            </option>
+            <option value="Sports & fitness" [ngValue]="'Sports & fitness'">
+              Sports & fitness
+            </option>
+            <option value="Food and drinks" [ngValue]="'Food and drinks'">
+              Food and drinks
+            </option>
+            <option value="Travel & tour" [ngValue]="'Travel & tour'">
+              Travel & tour
+            </option>
+            <option value="Entertainment" [ngValue]="'Entertainment'">
+              Entertainment
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-8 2xl:w-[800px] w-[620px]">
+        <div class="flex 2xl:space-x-[425px] space-x-[310px]">
+          <label
+            for="organizer"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Organizer name*</label
+          >
+          <label
+            for="organizer"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Organization Logo*</label
+          >
+        </div>
+
+        <div class="flex 2xl:w-[800px] w-[620px]">
+          <input
+          readonly
+            type="text"
+            id=""
+            class="pl-3 shadow-sm bg-white-50 border border-gray-300 bg-white text-gray-900 text-sm rounded-lg block w-4/5 p-1 mr-2"
+            placeholder="Enter name here"
+            formControlName="organizerName"
+          />
+
+          <div
+            class="text-red-600 absolute mt-14 text-[10px]"
+            *ngIf="
+              basicInformationForm.get('organizerName')?.invalid &&
+              (basicInformationForm.get('organizerName')?.touched ||
+                basicInformationForm.get('organizerName')?.dirty)
+            "
+          >
+            <span
+              *ngIf="basicInformationForm.get('organizerName')?.errors?.['required']"
+              >Field is required</span
+            >
+          </div>
+
+          <input
+            type="file"
+            id=""
+            class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-2/5 p-1"
+            placeholder="Organizer Logo*"
+            enctype="multipart/form-data"
+            (change)="onLogoImageChange($event)"
+            accept="image/*"
+          />
+
+          <div
+            class="text-red-600 absolute mt-12 text-[10px]"
+            *ngIf="
+              basicInformationForm.get('eventImage')?.invalid &&
+              (basicInformationForm.get('eventImage')?.touched ||
+                basicInformationForm.get('eventImage')?.dirty)
+            "
+          >
+            <span
+              *ngIf="basicInformationForm.get('eventImage')?.errors?.['required']"
+              >Field is required</span
+            >
+          </div>
+        </div>
+
+        <label
+          for="organizer"
+          class="font-normal mt-3 text-[14px] text-[#667085]"
+        >
+          This profile describes a unique organizer and shows all of the events
+          on one page.
+        </label>
+      </div>
+
+      <div class="mt-8 2xl:w-[800px] w-[620px]">
+        <label
+          for="orgEmail"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Organization email*</label
+        >
+        <input
+        readonly
+          type="email"
+          id=""
+          class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+          formControlName="organizerEmail"
+          placeholder="Enter organization email here"
+        />
+
+        <div
+          class="text-red-600 absolute mt-1 text-[10px]"
+          *ngIf="
+            basicInformationForm.get('organizerEmail')?.invalid &&
+            (basicInformationForm.get('organizerEmail')?.touched ||
+              basicInformationForm.get('organizerEmail')?.dirty)
+          "
+        >
+          <span
+            *ngIf="basicInformationForm.get('organizerEmail')?.errors?.['required']"
+            >Field is required</span
+          >
+          <span
+            *ngIf="basicInformationForm.get('organizerEmail')?.errors?.['email']"
+            >Input valid email address</span
+          >
+        </div>
+      </div>
+
+      <div class="mt-8 2xl:w-[800px] w-[620px]">
+        <label
+          for="tag"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Tags</label
+        >
+
+        <div class="flex 2xl:w-[800px] w-[620px]">
+          <input
+            type="text"
+            id="tag"
+            name="tag"
+            class="pl-3 shadow-sm 2xl:w-[800px] w-[620px] border border-gray-300 text-black text-sm rounded-lg block p-1.5 "
+            placeholder="Add tags"
+            [value]="tagInput"
+            (change)="onTagInputChange($event)"
+          />
+
+          <button
+            (click)="addTag(tagInput)"
+            type="button"
+            class="pl-3 pr-3 ml-2 shadow-sm bg-white border border-gray-300 text-black text-sm rounded-lg block max-w-max"
+            >
+            Add
+          </button>
+        </div>
+
+        <label class="font-normal mt-3 text-[14px] text-[#667085]">
+          Improve discoverability of your event by adding tags relevant to the
+          subject matter.
+        </label>
+
+        <ul class="flex flex-wrap ml-2 w-[620px] mt-5">
+          <li
+            *ngFor="let tag of tags"
+            class="flex max-w-max mt-3 mb-2 bg-[#F2F4F7] rounded-full px-3 py-1 text-sm font-normal text-gray-700 mr-2"
+          >
+            {{ tag }}
+            <img
+              src="{{ closeTag }}"
+              alt="Remove"
+              (click)="removeTag(tag)"
+              class="ml-2 cursor-pointer mt-2 size-1"
+            />
+          </li>
+        </ul>
+
+        <div class="border-t-2 border-gray-200 h-1 mt-5"></div>
+
+        <div
+          class="flex gap-5 mb-10 pt-1 justify-end mt-5"
+        >
+          <button
+            type="button"
+            class="bg-transparent border-[1px] text-black p-2 cursor-pointer font-normal rounded-md max-w-max"
+            (click)="showLogoutConfirmation()"
+          >
+            Discard
+          </button>
+
+          <button
+            type="button"
+            (click)="saveAndContinue()"
+            class="p-2 bg-[#d68585] cursor-pointer text-white font-normal rounded-md w-[164px]"
+            [disabled]="basicInformationForm.invalid"
+            [ngStyle]="basicInformationForm.invalid ? {'background-color': '#d68585', 'cursor': 'not-allowed'} : {'background-color': '#BC1B06'}"
+          >
+            Save & continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

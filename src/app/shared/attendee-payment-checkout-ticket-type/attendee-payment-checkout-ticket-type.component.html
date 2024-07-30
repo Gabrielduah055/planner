@@ -1,0 +1,201 @@
+<div class="bg-[#F9FAFB] flex flex-col p-4 h-screen overflow-scroll">
+  <div class="flex-1 mr-2 border-[1px] rounded-xl bg-white ">
+    <div class="flex dash border-b rounded-t-lg p-3">
+      <div class="flex items-center justify-center ml-5">
+        <img src="assets/esp/logo.png" alt="Event Vista Logo" class="mr-2" />
+        <h2 class="font-bold text-[24px]">
+          Event <span class="text-red-700"> Vista </span>
+        </h2>
+      </div>
+      <div
+        class="dash-content-right mb-2 flex ml-auto space-x-4 mt-2 xl:mt-2 h-10"
+      >
+        <img
+          src="assets/esp/dashboard/bell.png"
+          alt="Bell Icon"
+          class="block"
+        />
+        <div class="relative">
+          <img *ngIf="profileImageUrl; else svgFallbackp" [src]="profileImageUrl" alt="Avatar" class="block cursor-pointer border rounded-full w-10 h-10" (click)="toggleCard()" />
+          <ng-template #svgFallbackp>
+            <svg width="18" height="18" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="bg-[#C7B9DA] pt-2 pb-1 w-10 h-10 rounded-full border">
+              <path d="M17 19V17C17 15.9391 16.5786 14.9217 15.8284 14.1716C15.0783 13.4214 14.0609 13 13 13H5C3.93913 13 2.92172 13.4214 2.17157 14.1716C1.42143 14.9217 1 15.9391 1 17V19M13 5C13 7.20914 11.2091 9 9 9C6.79086 9 5 7.20914 5 5C5 2.79086 6.79086 1 9 1C11.2091 1 13 2.79086 13 5Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </ng-template>
+          <div
+            *ngIf="showProfileCard"
+            class="absolute right-0 mt-[1rem] w-72 bg-white shadow-md rounded-lg p-6 z-10"
+          >
+            <div class="flex items-center mb-4">
+              <img
+                *ngIf="profileImageUrl; else svgFallbackp"
+                [src]="profileImageUrl"
+                alt="Navbar Image"
+                class="border rounded-full w-10 h-10"
+              />
+              <div class="ml-2">
+                <h3 class="text-lg medium">{{ fullName }}</h3>
+                <p class="text-xs text-gray-500">{{ email }}</p>
+              </div>
+            </div>
+            <hr
+              class="bg-gray-500 border-2 dark:bg-gray-800 dark:border-gray-700 mb-4"
+            />
+            <button
+              class="flex items-center text-sm text-gray-500"
+              (click)="accountSettings()"
+            >
+              <img
+                src="assets/esp/dashboard/settings.png"
+                class="w-4 h-4 mr-2"
+              />
+              Account settings
+            </button>
+          </div>
+        </div>
+        <p class="block pt-2 h-8">{{ fullName }}</p>
+        <button class="h-8 pt-3" (click)="toggleCard()">
+          <img
+            src="assets/esp/dashboard/down.png"
+            alt="Down Icon"
+            class="block mr-8"
+            [class.clicked]="showProfileCard"
+          />
+        </button>
+      </div>
+    </div>
+
+    <div class="pl-40 p-10">
+      <div class="flex items-center space-x-2">
+        <img src="assets/esp/dashboard/event-create-back.png" alt="" />
+        <h3
+          role="button"
+          [routerLink]="['/attendee-payment', eventId]"
+          class="text-[14px] font-semibold text-[#BC1B06]"
+        >
+          Back
+        </h3>
+      </div>
+      <h2 class="text-2xl font-bold mt-6">Select your ticket type</h2>
+    </div>
+    <div class="flex justify-center mb-2 items-center gap-5" *ngFor="let ticketTier of ticketTiers">
+      <div>
+        <input
+        [(ngModel)]="selectedTicket"
+        [value]="ticketTier"
+        (ngModelChange)="onTicketSelected(ticketTier)"
+        checked="ticketTiers[1]"
+        type="radio"
+        class="appearance-none w-4 h-4 rounded-full m-auto border-2 bg-white checked:bg-[#E04F16]"
+      />
+      </div>
+      
+      <div class="flex gap-52 border-b-2 w-[950px] mb-2 p-5">
+        <div class="flex gap-5">
+          <div class="flex flex-col max-w-56">
+            <h1 class="font-semibold text-[#E04F16]">
+              {{ ticketTier.ticketName }}
+            </h1>
+            <div class="flex gap-2">
+              <img src="assets/checkout/ticket_type.svg" alt="ticket type" />
+              <h6>
+                Ticket Type: <span>{{ ticketTier.ticketType }}</span>
+              </h6>
+            </div>
+            <div class="flex gap-2">
+              <img
+                src="assets/checkout/ticket_quantity.svg"
+                alt="ticket type"
+              />
+              <h6>
+                Ticket Quantity: <span>{{ ticketTier.ticketQuantity }} </span
+                ><span>Left</span>
+              </h6>
+            </div>
+            <div class="flex gap-2">
+              <img src="assets/checkout/ticket_price.svg" alt="ticket type" />
+              <h6>
+                GHC <span>{{ ticketTier.price }}</span>
+              </h6>
+            </div>
+            <div
+              class="flex gap-2 cursor-pointer"
+              (click)="selectedTicket === ticketTier ? toggleAdditionalInfo() : '' "
+            >
+              <img
+                src="assets/checkout/additional_info.svg"
+                alt="ticket type"
+              />
+              <h6 class="text-sm text-[#EF6820]">Additional information</h6>
+            </div>
+            <div *ngIf="selectedTicket === ticketTier && showAdditionalInfo" class="ml-8">
+              <ul
+                class=""
+                *ngFor="let additional_info of ticketTier.additionalInformation"
+              >
+                <ol class="text-sm text-gray-700">
+                  {{
+                    additional_info.description
+                  }}
+                </ol>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <h1 class="font-semibold">Quantity</h1>
+          <button
+            (click)="decreaseQuantity(ticketTier)"
+            [disabled]="selectedTicket !== ticketTier"
+            data-action="remove"
+            class="border rounded-l-md px-3 p-1"
+            type="button"
+          >
+            &minus;
+          </button>
+          <input
+            type="text"
+            class="w-10 px-2 p-1 border-y text-center"
+            [value]="selectedTicket !== ticketTier ? 1 : quantity"
+            readonly
+          />
+          <button
+            (click)="increaseQuantity(ticketTier)"
+            [disabled]="selectedTicket !== ticketTier"
+            data-action="add"
+            class="border px-3 p-1 rounded-r-md"
+            type="button"
+          >
+            &plus;
+          </button>
+        </div>
+        <div>
+          <h1 class="font-semibold">Total Price</h1>
+          <h6 *ngIf="ticketTier.discountValue > 0">
+            <s>GHC {{ ticketTier.price.toFixed(0) }}</s>
+          </h6>
+          <h6>
+            GHC 
+            <span >{{ 
+            selectedTicket === ticketTier ? 
+            totalPrice.toFixed(0) : 
+            ticketTier.discountValue > 0 ? 
+            (ticketTier.price * (1- ticketTier.discountValue)).toFixed(0) : 
+            ticketTier.price.toFixed(0) 
+            }}</span>
+            
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end mb-4">
+      <button
+        (click)="initializePayment()"
+        type="submit"
+        class="bg-[#E04F16] text-white font-bold py-2.5 px-4 mr-44 rounded-md hover:bg-orange-600"
+      >
+        Proceed to checkout
+      </button>
+    </div>
+  </div>
+</div>

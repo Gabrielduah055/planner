@@ -1,0 +1,123 @@
+<div class="flex flex-col md:flex-row h-screen">
+  <!-- Sidebar Component -->
+  <app-admin-sidebar class="md:w-64"></app-admin-sidebar>
+  
+  <div class="flex flex-col flex-1">
+    <div class="shadow-lg border border-gray-200 rounded-lg mt-4 mr-2">
+      <div class="relative flex flex-col bg-white text-gray-700 shadow-sm rounded-xl">
+        <div class="contanier top-0 z-50 bg-white sticky w-full">
+            <!-- Dashboard Header -->
+        <div class="flex justify-between items-center mx-auto py-2  px-12">
+          <div>
+            <h1 class="font-bold text-bol">Dashboard</h1>
+            <p class="text-sm text-gray-500">Plan and manage your gatherings effortlessly.</p>
+          </div>
+          <div class="dash-content-right mb-2 flex ml-auto space-x-4 mt-2 xl:mt-2 h-10">
+            <img src="assets/esp/dashboard/bell.png" alt="Bell Icon" class="block" />
+            <div class="relative">
+              <img src="{{ profileImageUrl || 'assets/esp/dashboard/default-avatar.png' }}" alt="Avatar" class="block cursor-pointer border rounded-full w-10 h-10" (click)="toggleCard()" />
+              <div *ngIf="showProfileCard" class="absolute right-0 mt-2 w-72 bg-white shadow-md rounded-lg p-6 z-10">
+                
+                <div class="flex items-center">
+                  <img src="{{ profileImageUrl || 'assets/esp/dashboard/default-avatar.png' }}" alt="Profile Image" class="mr-2 w-10 h-10 border rounded-full" />
+                  <div>
+                    <h3 class="text-lg medium">{{constant.fullName}}</h3>
+                    <p class="text-xs text-gray-500">{{constant.email}}</p>
+                  </div>
+                </div>
+                <hr class="mb-4" />
+                <button class="text-sm text-gray-500 flex items-center" (click)="accountSettings()">
+                  <img src="assets/esp/dashboard/settings.png" class="w-4 h-4 mr-2" />
+                  Account settings
+                </button>
+              </div>
+            </div>
+            <p class="pt-2">{{constant.fullName}}</p>
+            <button (click)="toggleCard()">
+              <img src="assets/esp/dashboard/down.png" alt="Down Icon" class="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+        <hr>
+        
+        <!-- Dashboard Content -->
+        <div class="container mx-auto my-5">
+          <h1 class="font-semibold text-3xl text-gray-600">Welcome {{constant.fullName}} 👋</h1>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-7">
+            <div class="border p-6 shadow-md rounded">
+              <div class="flex justify-between">
+                <p class="text-sm font-medium text-gray-700">Total Events</p>
+                <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+              </div>
+              <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-semibold text-gray-600">{{totalEvents}}</h2>
+                <p></p>
+              </div>
+            </div>
+            <div class="border p-6 shadow-md rounded">
+              <div class="flex justify-between">
+                <p class="text-sm font-medium text-gray-700">Total Tickets</p>
+                <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+              </div>
+              <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-semibold text-gray-600">{{totalTickets}}</h2>
+                <img src="assets/esp/dashboard/base.png" alt="Tickets Icon" />
+              </div>
+            </div>
+            <div class="border p-6 shadow-md rounded">
+              <div class="flex justify-between">
+                <p class="text-sm font-medium text-gray-700">Total Revenue</p>
+                <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+              </div>
+              <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-semibold text-gray-600">{{totalRevenue}}</h2>
+                <img src="assets/esp/dashboard/base.png" alt="Revenue Icon" />
+              </div>
+            </div>
+            <div class="border p-6 shadow-md rounded">
+              <div class="flex justify-between">
+                <p class="text-sm font-medium text-gray-700">Total Funds</p>
+                <img src="assets/esp/dashboard/three-dots.png" alt="More Options" />
+              </div>
+              <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-semibold text-gray-600">8,000</h2>
+                <img src="assets/esp/dashboard/base.png" alt="Funds Icon" />
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        
+        
+
+        <!-- User Statistics -->
+         <div class="statistics">
+          <div class="container mx-auto my-10">
+            <app-statistics></app-statistics>
+          </div>
+  
+          <!-- Additional Information -->
+          <div class="container mx-auto flex justify-between my-4">
+            <div class="w-80 border flex flex-col gap-4 p-4 rounded ">
+              <div class="flex items-center justify-between">
+                <h3 class="font-medium text-text_color text-2xl">Tickets sold today</h3>
+                <img src="../../../../../../assets/esp/dashboard/chart.svg" alt="">
+              </div>
+              <h5 class="font-medium text-text_color text-sm">4004 pcs</h5>
+              <p class="text-slate-500 text-xs">{{constant.ticketsSoldContent}}</p>
+            </div>
+            <div class="w-80 border flex flex-col gap-4 p-4 rounded ">
+              <h3 class="font-medium text-text_color text-2xl">Number of Users</h3>
+              <canvas id="userChart"></canvas>
+            </div>
+            <div class="w-80 flex flex-col gap-4 p-4 rounded h-96">
+              <ejs-calendar id="calendar" [value]='value' class="w-full h-full p-5"></ejs-calendar>
+            </div>
+          </div>
+         </div>
+        
+
+      </div>
+    </div>
+  </div>
+</div>

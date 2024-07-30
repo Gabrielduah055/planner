@@ -1,0 +1,43 @@
+<div class="fixed top-0.5 left-0 w-full bg-white border-b border-gray-300 z-50">
+
+
+<div class="dash border-[1px] rounded-t-lg p-3 pl-5 flex">
+  <div
+    class="dash-content-right flex size-7 ml-[960px] space-x-5 mt-2 2xl:flex 2xl:size-7 2xl:ml-[1600px] 2xl:space-x-5 2xl:mt-2"
+  >
+    <div class="absolute left-24 -mt-3 cursor-pointer" (click)="orgDash()">
+      <div class="flex items-center justify-center -ml-16 -mt-1">
+        <img
+          src="{{ OrgDasImg }}"
+          alt="Event Vista Logo"
+          class="mr-2 mt-0"
+        />
+        <h2 class="font-bold text-[24.59px] pt-1">
+          {{ Event }} <span class="text-red-700">{{ Vista }}</span>
+        </h2>
+      </div>
+    </div>
+
+    <img
+      src="{{ NavbarBell }}"
+      alt=""
+      class="block absolute right-60 -mt-3"
+    />
+    <img
+      src="{{ NavBarImg }}"
+      alt=""
+      class="block absolute right-44 -mt-3"
+    />
+
+    <p class="block absolute right-20">Olivia Rhye</p>
+
+    <button>
+      <img
+        src="{{ NavBarDownArrow }}"
+        alt=""
+        class="size-3 absolute right-10 top-8"
+      />
+    </button>
+  </div>
+</div>
+</div>

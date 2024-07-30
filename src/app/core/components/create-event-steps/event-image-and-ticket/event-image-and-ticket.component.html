@@ -1,0 +1,460 @@
+<form [formGroup]="eventAndTicketForm">
+  <img src="{{ ticket }}" alt="" />
+
+  <div
+    class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+  >
+    <p>Basic information</p>
+    <p>Location & Venue layout</p>
+    <p>Date & time</p>
+    <p class="text-[#BC1B06]">Event image & ticket</p>
+  </div>
+
+  <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+    <h2 class="font-bold">Event image</h2>
+
+    <p class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]">
+      Add photo to show what your event will be about
+    </p>
+
+    <div
+      class="bg-gray-100 p-4 rounded-lg 2xl:w-[800px] w-[620px] h-[316px] xl:w-[700px] relative"
+    >
+      <img
+        *ngIf="eventImageUrl || eventAndTicketObject?.eventImageUrl"
+        [src]="eventImageUrl || eventAndTicketObject.eventImageUrl"
+        alt="Uploaded Image"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="flex items-center justify-center absolute inset-0">
+        <label for="seatingType" class="relative cursor-pointer">
+          <div class="flex w-max 2xl:ml-52 xl:ml-16">
+            <div
+              class="bg-white border absolute border-gray-300 2xl:w-max xl:w-max text-gray-900 text-sm rounded-lg flex p-1 space-x-2 2xl:right-20 xl:ml-16 xl:right-0 items-center justify-center"
+            >
+              <img
+                src="assets/esp/dashboard/img-icon.png"
+                alt="Upload Image"
+                class="mb-2"
+              />
+              <span>Upload image</span>
+            </div>
+          </div>
+          <input
+            type="file"
+            id="seatingType"
+            enctype="multipart/form-data"
+            class="absolute inset-0 opacity-0 cursor-pointer z-20"
+            (change)="onEventImageChange($event)"
+            accept="image/*"
+          />
+        </label>
+      </div>
+    </div>
+
+    <ul class="mt-5 flex space-x-5 xl:space-x-14 text-[12px] xl:ml-5">
+      <li class="list-disc">Recommended image size: 2160 x 1080px</li>
+      <li class="list-disc">Maximum file size 10MB</li>
+      <li class="list-disc">Supported image file: JPG or PNG</li>
+    </ul>
+
+    <div
+      class="text-red-600 absolute mt-1 text-[10px]"
+      *ngIf="
+        eventAndTicketForm.get('eventImage')?.invalid &&
+        (eventAndTicketForm.get('eventImage')?.touched ||
+          eventAndTicketForm.get('eventImage')?.dirty)
+      "
+    >
+      <span *ngIf="eventAndTicketForm.get('eventImage')?.errors?.['eventImage']"
+        >Field is required</span
+      >
+    </div>
+
+    <div class="2xl:w-[800px] w-[620px] xl:mt-16">
+      <h2 class="font-bold">Summary</h2>
+      <p class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]">
+        Grab people’s attention with a short description about your event.
+        Attendees will see this at the top of your event page. (140 characters)
+        <textarea
+          maxlength="140"
+          class="border overflow-y-auto border-gray-300 rounded-md p-2 w-[700px] h-32 mt-5 resize-none 2xl:w-[800px]"
+          placeholder="Enter a short event summary to get attendees excited..."
+          formControlName="eventSummary"
+        ></textarea>
+      </p>
+
+      <div
+        class="text-red-600 absolute my-2 text-[12px]"
+        *ngIf="
+          eventAndTicketForm.get('eventSummary')?.invalid &&
+          (eventAndTicketForm.get('eventSummary')?.touched ||
+            eventAndTicketForm.get('eventSummary')?.dirty)
+        "
+      >
+        <span
+          *ngIf="eventAndTicketForm.get('eventSummary')?.errors?.['required']"
+          >Field is required</span
+        >
+      </div>
+    </div>
+
+    <div class="mt-5 2xl:w-[800px] w-[620px]">
+      <h2 class="font-bold">Ticket</h2>
+      <p class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]">
+        Inform your attendees whether your event is a free or paid event
+      </p>
+
+      <div class="btn-all space-x-2">
+        <button
+          type="button"
+          [ngClass]="{
+            'border-[#BC1B06] bg-[#FFF4ED]': isFreeSelected,
+            'bg-transparent': !isFreeSelected
+          }"
+          class="border-[1px] text-black p-2.5 cursor-pointer font-normal rounded-md max-w-max"
+          (click)="toggleFreeForm(true)"
+        >
+          Free
+        </button>
+
+        <button
+          type="button"
+          [ngClass]="{
+            'border-[#BC1B06] bg-[#FFF4ED]': isPaidSelected,
+            'bg-transparent': !isPaidSelected
+          }"
+          class="border-[1px] text-black p-2.5 cursor-pointer font-normal rounded-md max-w-max"
+          (click)="togglePaidForm(true)"
+        >
+          Paid
+        </button>
+      </div>
+
+      <div
+        *ngIf="isPaidSelected"
+        class="bg-[#f2f3f5] pt-5 pb-5 pl-10 pr-10 xl:w-[700px] 2xl:w-[800px] rounded-lg border-2"
+      >
+        <div formArrayName="ticketTiers">
+          <div
+            *ngFor="let tier of ticketTiers.controls; let i = index"
+            [formGroupName]="i"
+            class="pt-5 pb-5"
+          >
+            <div>
+              <div class="mt-3 block">
+                <div class="relative">
+                  <img
+                    src="assets/esp/dashboard/close.png"
+                    alt=""
+                    class="absolute top-0 right-0 transform size-5 cursor-pointer"
+                    (click)="removeTicketTier(i)"
+                  />
+                </div>
+                <h6
+                  class="w-full h-[32px] text-red-600 text-[12px]"
+                  *ngIf="ticketTiers.at(i).invalid"
+                >
+                  All field is required
+                </h6>
+                <div class="mb-3">
+                  <div
+                    class="labels flex 2xl:space-x-[280px] xl:space-x-[220px] space-x-60"
+                  >
+                    <label
+                      for="name"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >Ticket name*</label
+                    >
+                    <label
+                      for="orgEmail"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >Ticket price*</label
+                    >
+                  </div>
+
+                  <div class="flex 2xl:w-[800px] w-[620px]">
+                    <input
+                      type="text"
+                      id=""
+                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block xl:w-[330.5px] 2xl:w-[350px] p-1.5 mb-2 mr-4"
+                      placeholder="Enter name of ticket here"
+                      formControlName="name"
+                    />
+                    <input
+                      type="number"
+                      min="1"
+                      id=""
+                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[350px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                      placeholder="Enter price of ticket here"
+                      formControlName="price"
+                    />
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <div
+                    class="labels flex 2xl:space-x-[280px] xl:space-x-[210px] space-x-60"
+                  >
+                    <label
+                      for="name"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >Ticket quantity*</label
+                    >
+                    <label
+                      for="orgEmail"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >Reserved tickets</label
+                    >
+                  </div>
+                </div>
+
+                <div class="flex 2xl:w-[800px] w-[620px] 2xl:gap-10">
+                  <input
+                    type="number"
+                    min="1"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[350px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                    placeholder="Enter ticket quantity here"
+                    formControlName="allocation"
+                  />
+                  <input
+                    type="number"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[350px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                    placeholder="Enter reserved tickets here"
+                    formControlName="reserveAllocation"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-5">
+                <div class="accordion">
+                  <div class="flex space-x-2">
+                    @if(isFormVisible){
+                    <img
+                      src="assets/esp/dashboard/up.png"
+                      alt=""
+                      class="size-4"
+                    />
+
+                    } @else if (!isFormVisible) {
+                    <img
+                      src="assets/esp/dashboard/down1.png"
+                      alt=""
+                      class="size-4"
+                    />
+
+                    }
+                    <button
+                      type="button"
+                      class="accordion-button xl:-mt-1 text-[#E04F16]"
+                      (click)="toggleAccordion()"
+                    >
+                      Configure form rule
+                    </button>
+                  </div>
+
+                  <div
+                    class="accordion-content"
+                    [style.display]="isFormVisible ? 'block' : 'none'"
+                  >
+                    <h3 class="w-fit h-[32px] font-inter font-semibold mt-5">
+                      Configure form rules
+                    </h3>
+                    <p class="text-[14px] font-medium">
+                      Configure rules for what happens after this form is
+                      submitted
+                    </p>
+                    <h6
+                      class="text-red-600 text-[12px] mt-2"
+                      *ngIf="ticketTiers.at(i).get('discounts')?.invalid"
+                    >
+                      All field is required
+                    </h6>
+
+                    <div formArrayName="discounts">
+                      <div
+                        *ngFor="
+                          let discount of getDiscounts(i).controls;
+                          let j = index
+                        "
+                        [formGroupName]="j"
+                        class="flex flex-wrap 2xl:w-[400px] w-[620px] mt-2"
+                      >
+                        <div class="flex 2xl:w-[200px] w-full items-center">
+                          <div class="mt-0 mr-2">If</div>
+                          <select
+                            class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[500px] xl:w-[330.5px] p-1.5 mb-2 mr-4"
+                            formControlName="discountVariable"
+                          >
+                            <option value="Age">Age</option>
+                            <option value="Gender">Gender</option>
+                            <option value="Tickets">Tickets</option>
+                          </select>
+                          <div
+                            *ngIf="
+                              getDiscounts(i).at(j).get('discountVariable')
+                                ?.value === 'Gender';
+                              else notGender
+                            "
+                          >
+                            <select
+                              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-1.5 mb-2 mr-4"
+                              formControlName="discountRule"
+                            >
+                              <option value="Equals (=)">Equals (=)</option>
+                            </select>
+                          </div>
+
+                          <ng-template #notGender>
+                            <select
+                              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[400px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                              formControlName="discountRule"
+                            >
+                              <option value="Equals (=)">Equals (=)</option>
+                              <option value="LessThanOrEquals (<=)">
+                                LessThanOrEquals
+                              </option>
+                              <option value="GreaterThanOrEquals (>=)">
+                                GreaterThanOrEquals
+                              </option>
+                            </select>
+                          </ng-template>
+
+                          <div
+                            *ngIf="
+                              getDiscounts(i).at(j).get('discountVariable')
+                                ?.value === 'Gender';
+                              else numberInput
+                            "
+                          >
+                            <select
+                              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-1.5 mb-2 mr-4"
+                              formControlName="conditionValue"
+                            >
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                            </select>
+                          </div>
+                          <ng-template #numberInput>
+                            <input
+                              min="1"
+                              type="number"
+                              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[100px] xl:w-[105px] w-[210px] p-1.5 mb-2 mr-4"
+                              placeholder="1"
+                              formControlName="conditionValue"
+                            />
+                          </ng-template>
+                          <select
+                            class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[400px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                            formControlName="discountType"
+                          >
+                            <option value="Amount off">Amount off</option>
+                            <option value="Discount off">Discount off</option>
+                          </select>
+                          <input
+                            type="number"
+                            min="1"
+                            class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[130px] xl:w-[105px] w-[310px] p-1.5 mb-2 mr-4"
+                            placeholder="Ghc200"
+                            formControlName="discountValue"
+                          />
+
+                          <img
+                            src="assets/esp/dashboard/close.png"
+                            alt=""
+                            class="size-3 cursor-pointer"
+                            (click)="removeRule(i, j)"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="flex space-x-2 mt-5 mb-5">
+                        <img
+                          src="assets/esp/dashboard/add_rule.png"
+                          alt=""
+                          class="size-4"
+                        />
+                        <button
+                          (click)="addDiscountRule(i)"
+                          [disabled]="
+                            ticketTiers.at(i).get('discounts')?.value.length >=
+                            3
+                          "
+                          type="button"
+                          class="accordion-button font-semibold text-[14px]"
+                          [ngStyle]="
+                            ticketTiers.at(i).get('discounts')?.value.length < 3
+                              ? {
+                                  color: '#E04F16'
+                                }
+                              : { color: '#d68585', cursor: 'not-allowed' }
+                          "
+                        >
+                          Add Rule
+                        </button>
+                      </div>
+
+                      <hr
+                        class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="2xl:ml-72 xl:ml-64 flex items-center justify-center space-x-2 mt-5 mb-5 bg-white border-gray-300 border-2 w-[126px] p-1 rounded-lg"
+          >
+            <img
+              src="assets/esp/dashboard/plus_b.png"
+              alt=""
+              class="size-4 mt-1"
+            />
+            <button
+              type="button"
+              class="accordion-button font-semibold text-[14px] xl:mr-50"
+              [disabled]="ticketTiers.invalid"
+              (click)="addTicketTier()"
+              [ngStyle]="
+                ticketTiers.invalid
+                  ? { color: '#9E9E9E', cursor: 'not-allowed' }
+                  : { color: '#000000' }
+              "
+            >
+              Add ticket
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-5 mb-10 pt-1 justify-end mt-5 2xl:w-[800px] w-[620px]">
+      <button
+        type="button"
+        class="bg-transparent border-[1px] text-black p-2 cursor-pointer font-normal rounded-md max-w-max"
+        (click)="prevStep()"
+      >
+        Previous
+      </button>
+
+      <button
+        (click)="saveAndContinue()"
+        type="button"
+        class="p-2 cursor-pointer clic text-white font-normal rounded-md w-[164px] 2xl:w-[170]"
+        [disabled]="
+          eventAndTicketForm.invalid || !(isFreeSelected || isPaidSelected)
+        "
+        [ngStyle]="
+          eventAndTicketForm.invalid || !(isFreeSelected || isPaidSelected)
+            ? { 'background-color': '#d68585', cursor: 'not-allowed' }
+            : { 'background-color': '#BC1B06' }
+        "
+      >
+        Save & continue
+      </button>
+    </div>
+  </div>
+</form>

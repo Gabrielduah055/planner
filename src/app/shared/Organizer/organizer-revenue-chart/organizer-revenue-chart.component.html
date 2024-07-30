@@ -1,0 +1,25 @@
+<div class="card-all m-0 flex mt-3 ml-8 mr-8">
+  <div
+    class="card w-full h-[486px] border-[1px] rounded-lg shadow-sm m-2 p-5"
+  >
+  <div class="flex space-x-80">
+    <h2 class="mt-10 font-semibold text-[20.88px]">{{ RevChart }}</h2>
+
+    <div class="filter mt-10">
+      <img src="assets/esp/dashboard/filter.png" alt="" class="absolute mt-3 ml-2 w-3" />
+      <select
+        id="countries"
+        formControlName="role"
+        class="shadow-sm bg-[white] w-[113px] border border-gray-300 text-gray-900 text-sm rounded-md block pl-7 dark:text-white p-2.5"
+      >
+        <option value="" selected disabled> 2024 </option>
+        <option value="All "> 2024 </option>
+        <option value="Free "> 2022 </option>
+        <option value="Paid ">2021 </option>
+      </select>
+    </div>
+
+  </div>
+<app-line-chart></app-line-chart>
+  </div>
+</div>

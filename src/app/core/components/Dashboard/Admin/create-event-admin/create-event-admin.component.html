@@ -1,0 +1,1696 @@
+<div
+  class="font-inter relative flex flex-col sm:h-[calc(100vh-2rem)] p-2 lg:h-[calc(100vh-2rem)] 2xl:h-[calc(100vh-2rem)]"
+>
+  <div class="]">
+    <app-organizer-create-event-bar></app-organizer-create-event-bar>
+   
+
+    <div class="card-all m-0 flex mt-12 2xl:ml-[170px] -ml-[50px] mr-8">
+      <div class="">
+        <div
+        class="text-first-event flex justify-center items-center cursor-pointer"
+        (click)="showLogoutConfirmation()"
+      >
+        <img
+          src="{{ EventProgressImg }}"
+          alt=""
+          class="relative ml-[380px] xl:mt-16"
+        />
+
+        <p
+          class="xl:pb-5 text-[#BC1B06] absolute font-normal text-[14px] left-[370px] top-[115px] 2xl:left-[600px] xl:mb-10"
+        >
+          {{ BackToEvent }}
+        </p>
+      </div>
+
+
+        <div
+        *ngIf="isLogoutModalVisible"
+        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50"
+      >
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+          <div class="logout text-left">
+            <h3 class="mb-2">Discard</h3>
+            <p>
+              Are you sure you want to discard? By discarding , <br />
+              you will be redirected to the event page<br />
+            </p>
+          </div>
+          <div class="mt-4 flex justify-center">
+            <button
+              (click)="cancelLogout()"
+              class="bg-white border border-gray-400 text-gray-800 py-2 px-4 rounded-lg mr-2"
+            >
+              Cancel
+            </button>
+            <button
+              (click)="confirmLogout()"
+              class="bg-red-600 text-white py-2 px-4 rounded-lg"
+            >
+              Discard
+            </button>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+
+    <div
+      class="card-all m-0 flex mt-6 ml-12 mr-8 border-b-1 2xl:m-0 2xl:flex 2xl:mt-6 2xl:ml-8 2xl:mr-8 2xl:border-b-1"
+    >
+      <div class="card w-2/3 h-[486px] rounded-lg m-2 p-5 mx-auto">
+        <div class="text-first-event flex justify-center items-center">
+          <form
+            (ngSubmit)="onSubmit()"
+            [formGroup]="CreateEvent"
+            enctype="multipart/form-data"
+          >
+            <div *ngIf="step === 1">
+              <img src="{{ EventLink }}" alt="" />
+
+              <div
+                class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+              >
+                <p class="text-[#BC1B06]">{{ Basic }}</p>
+                <p>{{ LocVenueLayout }}</p>
+                <p>{{ DateTime }}</p>
+                <p>{{ EventTicket }}</p>
+              </div>
+
+              <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+                <h2 class="font-bold">{{ Basic }}</h2>
+                <p
+                  class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                >
+                  Name your events and tell event goers why they should come.
+                  Add details that highlight what makes it unique
+                </p>
+
+                <div class="one-form">
+                  <div class="mt-5">
+                    <div class="labels flex 2xl:space-x-[330px] space-x-60">
+                      <label
+                        for="name"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Event Title*</label
+                      >
+                      <label
+                        for="orgEmail"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Organization Category*</label
+                      >
+                    </div>
+
+                    <div class="flex 2xl:w-[800px] w-[620px]">
+                      <input
+                        type="text"
+                        id="name"
+                        class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block w-[620px] p-1.5"
+                        formControlName="eventTitle"
+                        placeholder="Enter event title here"
+                      />
+                      <div
+                        class="text-red-600 absolute mt-8 text-[10px]"
+                        *ngIf="
+                          CreateEvent.get('eventTitle')?.invalid &&
+                          (CreateEvent.get('eventTitle')?.touched ||
+                            CreateEvent.get('eventTitle')?.dirty)
+                        "
+                      >
+                        <span
+                          *ngIf="CreateEvent.get('eventTitle')?.errors?.['required']"
+                          >Field is required</span
+                        >
+                        <span
+                          *ngIf="CreateEvent.get('eventTitle')?.errors?.['minlength']"
+                          >Min 6 Characters Required</span
+                        >
+                      </div>
+
+                      <select
+                        id="name"
+                        class="pl-3 ml-2 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-[620px] p-1.5"
+                        formControlName="eventCategory"
+                      >
+                        <option value="Business" [ngValue]="'Business'">
+                          Business
+                        </option>
+                        <option value="Technology" [ngValue]="'Technology'">
+                          Technology
+                        </option>
+                        <option value="Arts & culture" [ngValue]="'Technology'">
+                          Arts & culture
+                        </option>
+                        <option
+                          value="Sports & fitness"
+                          [ngValue]="'Sports & fitness'"
+                        >
+                          Sports & fitness
+                        </option>
+                        <option
+                          value="Food and drinks"
+                          [ngValue]="'Food and drinks'"
+                        >
+                          Food and drinks
+                        </option>
+                        <option
+                          value="Travel & tour"
+                          [ngValue]="'Travel & tour'"
+                        >
+                          Travel & tour
+                        </option>
+                        <option
+                          value="Entertainment"
+                          [ngValue]="'Entertainment'"
+                        >
+                          Entertainment
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="mt-8 2xl:w-[800px] w-[620px]">
+                    <div class="flex 2xl:space-x-[425px] space-x-[310px]">
+                      <label
+                        for="organizer"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Organizer name*</label
+                      >
+                      <label
+                        for="organizer"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Organization Logo*</label
+                      >
+                    </div>
+
+                    <div class="flex 2xl:w-[800px] w-[620px]">
+                      <input
+                        type="text"
+                        id=""
+                        class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-4/5 p-1 mr-2"
+                        placeholder="Enter name here"
+                        formControlName="organizerName"
+                      />
+
+                      <div
+                        class="text-red-600 absolute mt-14 text-[10px]"
+                        *ngIf="
+                          CreateEvent.get('organizerName')?.invalid &&
+                          (CreateEvent.get('organizerName')?.touched ||
+                            CreateEvent.get('organizerName')?.dirty)
+                        "
+                      >
+                        <span
+                          *ngIf="CreateEvent.get('organizerName')?.errors?.['required']"
+                          >Field is required</span
+                        >
+                      </div>
+
+                      <input
+                        type="file"
+                        id=""
+                        class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-2/5 p-1"
+                        placeholder="Organizer Logo*"
+                        formControlName="organizerLogo"
+                        enctype="multipart/form-data"
+                        (change)="logoImage($event, 'organizerLogo')"
+                      />
+
+                      <div
+                        class="text-red-600 absolute mt-12 text-[10px]"
+                        *ngIf="
+                          CreateEvent.get('eventImage')?.invalid &&
+                          (CreateEvent.get('eventImage')?.touched ||
+                            CreateEvent.get('eventImage')?.dirty)
+                        "
+                      >
+                        <span
+                          *ngIf="CreateEvent.get('eventImage')?.errors?.['required']"
+                          >Field is required</span
+                        >
+                      </div>
+                    </div>
+
+                    <label
+                      for="organizer"
+                      class="font-normal mt-3 text-[14px] text-[#667085]"
+                    >
+                      This profile describes a unique organizer and shows all of
+                      the events on one page.
+                    </label>
+                  </div>
+
+                  <div class="mt-8 2xl:w-[800px] w-[620px]">
+                    <label
+                      for="orgEmail"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >Organization email*</label
+                    >
+                    <input
+                      type="text"
+                      id=""
+                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                      formControlName="organizerEmail"
+                      placeholder="Enter organization email here"
+                    />
+
+                    <div
+                      class="text-red-600 absolute mt-1 text-[10px]"
+                      *ngIf="
+                        CreateEvent.get('organizerEmail')?.invalid &&
+                        (CreateEvent.get('organizerEmail')?.touched ||
+                          CreateEvent.get('organizerEmail')?.dirty)
+                      "
+                    >
+                      <span
+                        *ngIf="CreateEvent.get('organizerEmail')?.errors?.['required']"
+                        >Field is required</span
+                      >
+                      <span
+                        *ngIf="CreateEvent.get('organizerEmail')?.errors?.['email']"
+                        >Input valid email address</span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="mt-8 2xl:w-[800px] w-[620px]">
+                    <label
+                      for="tag"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >Tags</label
+                    >
+
+                    <div class="flex 2xl:w-[800px] w-[620px]">
+                      <input
+                        type="text"
+                        id="tag"
+                        name="tag"
+                        class="pl-3 shadow-sm 2xl:w-[800px] w-[620px] bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block p-1.5 dark:text-white"
+                        formControlName="tag"
+                        placeholder="Add tags"
+                      />
+
+                      <button
+                        (click)="addTag(tag.value)"
+                        type="button"
+                        class="pl-3 pr-3 ml-2 shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block max-w-max"
+                      >
+                        Add
+                      </button>
+                    </div>
+
+                    <label class="font-normal mt-3 text-[14px] text-[#667085]">
+                      Improve discoverability of your event by adding tags
+                      relevant to the subject matter.
+                    </label>
+
+                    <ul class="flex flex-wrap ml-2 w-[620px] mt-5">
+                      <li
+                        *ngFor="let tag of tags"
+                        class="flex max-w-max mt-3 mb-2 bg-[#F2F4F7] rounded-full px-3 py-1 text-sm font-normal text-gray-700 mr-2"
+                      >
+                        {{ tag }}
+                        <img
+                          src="{{ closeTag }}"
+                          alt="Remove"
+                          (click)="removeTag(tag)"
+                          class="ml-2 cursor-pointer mt-2 size-1"
+                        />
+                      </li>
+                    </ul>
+
+                    <div class="border-t-2 border-gray-200 h-1 mt-5"></div>
+
+                    <div
+                      class="btns-success flex -mt-[200px] ml-[375px] 2xl:ml-[570px] space-x-3 right-[350px] mb-20 pt-1"
+                    >
+                      <button
+                        type="button"
+                        class="bg-transparent border-[1px] text-black p-2 mt-64 cursor-pointer font-normal rounded-md max-w-max"
+                        (click)="confirmDiscard()"
+                      >
+                        Discard
+                      </button>
+
+                      <button
+                        type="button"
+                        class="bg-[#BC1B06] p-2.5 mt-64 cursor-pointer text-white font-normal rounded-md w-[164px]"
+                        (click)="nextStep()"
+                      >
+                        Save & continue
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- form step 2 -->
+            <div *ngIf="step === 2">
+              <img src="{{ LocationImg }}" alt="" />
+
+              <div
+                class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+              >
+                <p>Basic information</p>
+                <p class="text-[#BC1B06]">Location & Venue layout</p>
+                <p>Date & time</p>
+                <p>Event image & ticket</p>
+              </div>
+
+              <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+                <h2 class="font-bold">Location</h2>
+                <p
+                  class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                >
+                  Help people in the area discover your event and let attendees
+                  know where to show up.
+                </p>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Venue Location*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="venueLocation"
+                    placeholder="Enter location here"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('venueLocation')?.invalid &&
+                      (CreateEvent.get('venueLocation')?.touched ||
+                        CreateEvent.get('venueLocation')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="CreateEvent.get('venueLocation')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Address line 1*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    placeholder="Enter street address of the venue or event location"
+                    formControlName="venueAddress1"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('venueAddress1')?.invalid &&
+                      (CreateEvent.get('venueAddress1')?.touched ||
+                        CreateEvent.get('venueAddress1')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="CreateEvent.get('venueAddress1')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Address line 2</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="venueAddress2"
+                    placeholder="Enter location here"
+                  />
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >City*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="city"
+                    placeholder="Enter city or locality where event will be held"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('city')?.invalid &&
+                      (CreateEvent.get('city')?.touched ||
+                        CreateEvent.get('city')?.dirty)
+                    "
+                  >
+                    <span *ngIf="CreateEvent.get('city')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >State/Province/Region*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="stateProvinceRegion"
+                    placeholder="Enter state, province or region where event will be held"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('stateProvinceRegion')?.invalid &&
+                      (CreateEvent.get('stateProvinceRegion')?.touched ||
+                        CreateEvent.get('stateProvinceRegion')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="CreateEvent.get('stateProvinceRegion')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <label
+                    for="orgEmail"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Country*</label
+                  >
+                  <input
+                    type="text"
+                    id=""
+                    class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg block 2xl:w-[800px] w-[620px] p-1.5"
+                    formControlName="country"
+                    placeholder="Enter country where event will be held"
+                  />
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('country')?.invalid &&
+                      (CreateEvent.get('country')?.touched ||
+                        CreateEvent.get('country')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="CreateEvent.get('country')?.errors?.['required']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-8 2xl:w-[800px] w-[620px]">
+                  <h2 class="font-bold">Venue layout</h2>
+                  <p
+                    class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                  >
+                    Add photo to show attendees how your venue layout will be
+                    example seating types
+                  </p>
+
+                  <div
+                    class="bg-gray-100 p-4 rounded-lg w-[630px] h-[316px] 2xl:w-[800px] relative"
+                  >
+                    <img
+                      *ngIf="venueLayoutUrl"
+                      [src]="venueLayoutUrl"
+                      alt="Uploaded Image"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div
+                      class="flex items-center justify-center absolute inset-0"
+                    >
+                      <label for="seatingType" class="relative cursor-pointer">
+                        <div class="flex w-max 2xl:ml-14 xl:ml-16">
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/img-icon.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Upload image</span>
+                          </div>
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/auto-cad.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Design with CAD</span>
+                          </div>
+                        </div>
+                        <input
+                          type="file"
+                          id="venueLayoutUrl"
+                          formControlName="venueLayoutUrl"
+                          enctype="multipart/form-data"
+                          class="absolute inset-0 opacity-0 cursor-pointer z-20"
+                          (change)="locationImage($event, 'venueLayoutUrl')"
+
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <ul
+                    class="mt-5 flex space-x-5 xl:space-x-6 text-[12px] xl:ml-3"
+                  >
+                    <li class="list-disc">
+                      Recommended image size: 2160 x 1080px
+                    </li>
+                    <li class="list-disc">Maximum file size 10MB</li>
+                    <li class="list-disc">Supported image file: JPG or PNG</li>
+                  </ul>
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('venueLayout')?.invalid &&
+                      (CreateEvent.get('venueLayout')?.touched ||
+                        CreateEvent.get('venueLayout')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="CreateEvent.get('venueLayout')?.errors?.['venueLayout']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-5 2xl:w-[800px] w-[620px]">
+                  <h2 class="font-bold">Seating type</h2>
+                  <p
+                    class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                  >
+                    Show attendees how your venue seating type will be
+                  </p>
+
+                  <div
+                    class="bg-gray-100 p-4 rounded-lg w-[630px] h-[316px] 2xl:w-[800px] relative"
+                  >
+                    <img
+                      *ngIf="seatingTypeUrl"
+                      [src]="seatingTypeUrl"
+                      alt="Uploaded Image"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div
+                      class="flex items-center justify-center absolute inset-0"
+                    >
+                      <label for="seatingType" class="relative cursor-pointer">
+                        <div class="flex w-max 2xl:ml-14 xl:ml-16">
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/img-icon.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Upload image</span>
+                          </div>
+                          <div
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg ml-2 flex p-1 space-x-0 items-center justify-center"
+                          >
+                            <img
+                              src="assets/esp/dashboard/auto-cad.png"
+                              alt="Upload Image"
+                              class="mb-2"
+                            />
+                            <span>Design with toptableplanner</span>
+                          </div>
+                        </div>
+                        <input
+                          type="file"
+                          id="seatingTypeUrl"
+                          formControlName="seatingTypeUrl"
+                          class="absolute inset-0 opacity-0 cursor-pointer z-20"
+                          (change)="seatingImage($event, 'seatingTypeUrl')"
+                          enctype="multipart/form-data"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <ul
+                    class="mt-5 flex space-x-5 xl:space-x-6 text-[12px] xl:ml-3"
+                  >
+                    <li class="list-disc">
+                      Recommended image size: 2160 x 1080px
+                    </li>
+                    <li class="list-disc">Maximum file size 10MB</li>
+                    <li class="list-disc">Supported image file: JPG or PNG</li>
+                  </ul>
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('seatingType')?.invalid &&
+                      (CreateEvent.get('seatingType')?.touched ||
+                        CreateEvent.get('seatingType')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="CreateEvent.get('seatingType')?.errors?.['seatingType']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-5 2xl:w-[820px] w-[620px] mb-20 absolute">
+                  <div
+                    class="btns-success flex -mt-[200px] ml-[375px] 2xl:ml-[570px] space-x-3 right-[350px] mb-20 pt-1"
+                  >
+                    <button
+                      type="button"
+                      class="bg-transparent border-[1px] text-black p-2 mt-64 cursor-pointer font-normal rounded-md max-w-max"
+                      (click)="prevStep()"
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      type="button"
+                      class="bg-[#BC1B06] p-2.5 mt-64 cursor-pointer text-white font-normal rounded-md w-[164px]"
+                      (click)="nextStep()"
+                    >
+                      Save & continue
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- form step 2 end -->
+            </div>
+
+            <!-- form page 3 -->
+
+            <div *ngIf="step === 3">
+              <img src="{{ DateAndTime }}" alt="" />
+
+              <div
+                class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+              >
+                <p>Basic information</p>
+                <p>Location & Venue layout</p>
+                <p class="text-[#BC1B06]">Date & time</p>
+                <p>Event image & ticket</p>
+              </div>
+
+              <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+                <h2 class="font-bold">Date and Time</h2>
+                <p
+                  class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                >
+                  Tell event-goers when your event starts and ends so they can
+                  make plans to attend.
+                </p>
+
+                <div class="mt-5">
+                  <div class="labels flex 2xl:space-x-[260px] space-x-60">
+                    <label
+                      for="name"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >Start date</label
+                    >
+                    <label
+                      for="orgEmail"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >Start Time*</label
+                    >
+                  </div>
+
+                  <div class="flex 2xl:w-[900px] w-[620px] pl-0">
+                    <input
+                      type="date"
+                      id=""
+                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+                      placeholder="Enter event title here"
+                      formControlName="eventStartDate"
+                    />
+
+                    <div
+                      class="text-red-600 absolute mt-1 text-[10px]"
+                      *ngIf="
+                        CreateEvent.get('eventStartDate')?.invalid &&
+                        (CreateEvent.get('eventStartDate')?.touched ||
+                          CreateEvent.get('eventStartDate')?.dirty)
+                      "
+                    >
+                      <span
+                        *ngIf="CreateEvent.get('eventStartDate')?.errors?.['eventStartDate']"
+                        >Field is required</span
+                      >
+                    </div>
+
+                    <input
+                      type="time"
+                      id=""
+                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+                      placeholder="Enter event title here"
+                      formControlName="eventStartTime"
+                    />
+
+                    <div
+                      class="text-red-600 absolute mt-1 text-[10px]"
+                      *ngIf="
+                        CreateEvent.get('eventStartTime')?.invalid &&
+                        (CreateEvent.get('eventStartTime')?.touched ||
+                          CreateEvent.get('eventStartTime')?.dirty)
+                      "
+                    >
+                      <span
+                        *ngIf="CreateEvent.get('eventStartTime')?.errors?.['eventStartTime']"
+                        >Field is required</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-5">
+                  <div class="labels flex 2xl:space-x-[260px] space-x-64">
+                    <label
+                      for=""
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >End date</label
+                    >
+                    <label
+                      for="orgEmail"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                      >End Time*</label
+                    >
+                  </div>
+
+                  <div class="flex 2xl:w-[800px] w-[620px] pl-0">
+                    <input
+                      type="date"
+                      id=""
+                      class="ppl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4 pl"
+                      placeholder="Enter event title here"
+                      formControlName="eventEndDate"
+                      (change)="toggleStartTime($event)"
+                    />
+
+                    <input
+                      type="time"
+                      id="time2"
+                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+                      placeholder="Enter event title here"
+                      formControlName="eventEndTime"
+                      (change)="toggleEndTime($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="mt-5">
+                  <div class="mb-5">
+                    <div class="flex items-center space-x-4">
+                      <input
+                        type="checkbox"
+                        id="displayStartTime"
+                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        (change)="toggleStartTime($event)"
+                      />
+                      <label
+                        for="displayStartTime"
+                        class="block mb-2 text-sm font-medium text-gray-900 mt-1"
+                        >Display start time</label
+                      >
+                    </div>
+                    <div class="ml-8">
+                      <p
+                        class="block mb-2 text-sm font-normal text-gray-900 mt-2"
+                      >
+                        The start time of your event will be displayed to
+                        attendees
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex items-center space-x-4">
+                      <input
+                        type="checkbox"
+                        id="displayEndTime"
+                        (change)="toggleEndTime($event)"
+                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      />
+                      <label
+                        for="displayEndTime"
+                        class="block mb-2 text-sm font-medium text-gray-900 mt-1"
+                        >Display end time</label
+                      >
+                    </div>
+                    <div class="ml-8">
+                      <p
+                        class="block mb-2 text-sm font-normal text-gray-900 mt-2"
+                      >
+                        The end time of your event will be displayed to
+                        attendees
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="mt-5">
+          <div class="mb-5">
+            <div class="flex items-center space-x-4">
+              <input type="checkbox" id="displayStartTime" class="h-4 w-4 ring-orange-400 focus:ring-red-400 border-gray-300 rounded" (change)="toggleStartTime($event)" [class]="showStart ? 'text-orange-500' : 'text-orange-500'">
+              <label for="displayStartTime" class="block mb-2 text-sm font-medium text-gray-900 mt-2">Display start time</label>
+            </div>
+            <div class="ml-8">
+              <p class="block mb-2 text-sm font-normal text-gray-900 mt-2">The start time of your event will be displayed to attendees</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center space-x-4">
+              <input type="checkbox" id="displayEndTime" (change)="toggleEndTime($event)" class="h-4 w-4 ring-orange-400 focus:ring-red-400 border-gray-300 rounded" [class]="showEnd ? 'text-orange-500' : 'ring-orange-400'">
+              <label for="displayEndTime" class="block mb-2 text-sm font-medium text-gray-900 mt-2">Display end time</label>
+            </div>
+            <div class="ml-8">
+              <p class="block mb-2 text-sm font-normal text-gray-900 mt-2">The end time of your event will be displayed to attendees</p>
+            </div>
+          </div>
+        </div> -->
+
+                <div class="mt-5 2xl:w-[820px] w-[620px] mb-20 absolute">
+                  <div
+                    class="btns-success flex -mt-[200px] ml-[375px] 2xl:ml-[570px] space-x-3 right-[350px] mb-20 pt-1"
+                  >
+                    <button
+                      type="button"
+                      class="bg-transparent border-[1px] text-black p-2 mt-64 cursor-pointer font-normal rounded-md max-w-max"
+                      (click)="prevStep()"
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      type="button"
+                      class="bg-[#BC1B06] p-2.5 mt-64 cursor-pointer text-white font-normal rounded-md w-[164px]"
+                      (click)="nextStep()"
+                    >
+                      Save & continue
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- form step 4  -->
+
+            <div *ngIf="step === 4">
+              <img src="{{ Ticket }}" alt="" />
+
+              <div
+                class="event-progress absolute flex xl:space-x-20 mt-2 text-[14px] 2xl:absolute 2xl:flex 2xl:space-x-36 2xl:mt-8 2xl:ml-16 2xl:text-[14px]"
+              >
+                <p>Basic information</p>
+                <p>Location & Venue layout</p>
+                <p>Date & time</p>
+                <p class="text-[#BC1B06]">Event image & ticket</p>
+              </div>
+
+              <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-20">
+                <h2 class="font-bold">Event image</h2>
+
+                <p
+                  class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                >
+                  Add photo to show what your event will be about
+                </p>
+
+                <div
+                  class="bg-gray-100 p-4 rounded-lg 2xl:w-[800px] w-[620px] h-[316px] xl:w-[700px] relative"
+                >
+                  <img
+                    *ngIf="eventImageUrl"
+                    [src]="eventImageUrl"
+                    alt="Uploaded Image"
+                    class="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div
+                    class="flex items-center justify-center absolute inset-0"
+                  >
+                    <label for="seatingType" class="relative cursor-pointer">
+                      <div class="flex w-max 2xl:ml-52 xl:ml-16">
+                        <div
+                          class="bg-white border absolute border-gray-300 2xl:w-max xl:w-max text-gray-900 text-sm rounded-lg flex p-1 space-x-2 2xl:right-20 xl:ml-16 xl:right-0 items-center justify-center"
+                        >
+                          <img
+                            src="assets/esp/dashboard/img-icon.png"
+                            alt="Upload Image"
+                            class="mb-2"
+                          />
+                          <span>Upload image</span>
+                        </div>
+                      </div>
+                      <input
+                        type="file"
+                        id="seatingType"
+                        formControlName="eventImageUrl"
+                        enctype="multipart/form-data"
+                        class="absolute inset-0 opacity-0 cursor-pointer z-20"
+                        (change)="eventImage($event, 'eventImageUrl')"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <ul
+                  class="mt-5 flex space-x-5 xl:space-x-14 text-[12px] xl:ml-5"
+                >
+                  <li class="list-disc">
+                    Recommended image size: 2160 x 1080px
+                  </li>
+                  <li class="list-disc">Maximum file size 10MB</li>
+                  <li class="list-disc">Supported image file: JPG or PNG</li>
+                </ul>
+
+                <div
+                  class="text-red-600 absolute mt-1 text-[10px]"
+                  *ngIf="
+                    CreateEvent.get('eventImage')?.invalid &&
+                    (CreateEvent.get('eventImage')?.touched ||
+                      CreateEvent.get('eventImage')?.dirty)
+                  "
+                >
+                  <span
+                    *ngIf="CreateEvent.get('eventImage')?.errors?.['eventImage']"
+                    >Field is required</span
+                  >
+                </div>
+
+                <div class="2xl:w-[800px] w-[620px] xl:mt-16">
+                  <h2 class="font-bold">Summary</h2>
+                  <p
+                    class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                  >
+                    Grab people’s attention with a short description about your
+                    event. Attendees will see this at the top of your event
+                    page. (140 characters)
+
+                    <!-- <p class="lock mb-2 text-sm font-normal text-gray-900 xl:ml-20" >
+                  {{ CreateEvent.get('venueLocation')?.value }}</p>
+
+                </p> -->
+
+                    <textarea
+                      class="border overflow-y-auto border-gray-300 rounded-md p-2 w-[700px] h-32 mt-5 resize-none 2xl:w-[800px]"
+                      placeholder="Enter a short event summary to get attendees excited..."
+                      formControlName="eventSummary"
+                    ></textarea>
+                  </p>
+
+                  <div
+                    class="text-red-600 absolute mt-1 text-[10px]"
+                    *ngIf="
+                      CreateEvent.get('eventSummary')?.invalid &&
+                      (CreateEvent.get('eventSummary')?.touched ||
+                        CreateEvent.get('eventSummary')?.dirty)
+                    "
+                  >
+                    <span
+                      *ngIf="CreateEvent.get('eventSummary')?.errors?.['eventSummary']"
+                      >Field is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-5 2xl:w-[800px] w-[620px]">
+                  <h2 class="font-bold">Ticket</h2>
+                  <p
+                    class="font-normal mt-3 text-[14px] text-[#667085] w-[525px]"
+                  >
+                    Inform your attendees whether your event is a free or paid
+                    event
+                  </p>
+
+                  <div class="btn-all space-x-2">
+                    <button
+                      type="button"
+                      [ngClass]="{
+                        'border-[#BC1B06] bg-[#FFF4ED]': isFreeSelected,
+                        'bg-transparent': !isFreeSelected
+                      }"
+                      class="border-[1px] text-black p-2.5 cursor-pointer font-normal rounded-md max-w-max"
+                      (click)="toggleFreeForm(true)"
+                    >
+                      Free
+                    </button>
+
+                    <button
+                      type="button"
+                      [ngClass]="{
+                        'border-[#BC1B06] bg-[#FFF4ED]': isPaidSelected,
+                        'bg-transparent': !isPaidSelected
+                      }"
+                      class="border-[1px] text-black p-2.5 cursor-pointer font-normal rounded-md max-w-max"
+                      (click)="togglePaidForm(true)"
+                    >
+                      Paid
+                    </button>
+
+                  </div>
+
+                  <div *ngIf="isPaidSelected" class="mt-4 mb-5">
+                    <!-- here ... -->
+                    <div
+                      *ngFor="let ticket of tickets; let i = index"
+                      class="bg-[#f2f3f5] pt-5 pb-5 pl-10 pr-10 xl:w-[700px] 2xl:w-[800px] rounded-lg border-2 mb-5"
+                    >
+                      <div>
+                        <div class="mt-5 block">
+                          <h3
+                            class="w-[53px] h-[32px] font-inter font-semibold"
+                          >
+                            Tier {{ i + 1 }}
+                          </h3>
+
+                          <div class="mb-3">
+                            <div
+                              class="labels flex 2xl:space-x-[280px] xl:space-x-[220px] space-x-60"
+                            >
+                              <label
+                                for="name"
+                                class="block mb-2 text-sm font-medium text-gray-900"
+                                >Ticket name*</label
+                              >
+                              <label
+                                for="orgEmail"
+                                class="block mb-2 text-sm font-medium text-gray-900"
+                                >Ticket price*</label
+                              >
+                            </div>
+
+                            <div class="flex 2xl:w-[800px] w-[620px]">
+                              <input
+                                type="text"
+                                id=""
+                                class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block xl:w-[330.5px] 2xl:w-[350px] p-1.5 mb-2 mr-4"
+                                placeholder="Enter name of ticket here"
+                                formControlName="name"
+                              />
+                              <input
+                                type="number"
+                                id=""
+                                class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[350px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                                placeholder="Enter price of ticket here"
+                                formControlName="price"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="mb-3">
+                            <div
+                              class="labels flex 2xl:space-x-[280px] xl:space-x-[210px] space-x-60"
+                            >
+                              <label
+                                for="name"
+                                class="block mb-2 text-sm font-medium text-gray-900"
+                                >Ticket quantity*</label
+                              >
+                              <label
+                                for="orgEmail"
+                                class="block mb-2 text-sm font-medium text-gray-900"
+                                >Reserved tickets</label
+                              >
+                            </div>
+                          </div>
+
+                          <div class="flex 2xl:w-[800px] w-[620px] mt-">
+                            <input
+                              type="number"
+                              id=""
+                              class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[350px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                              placeholder="Enter ticket quantity here"
+                              formControlName="allocation"
+                            />
+                            <input
+                              type="number"
+                              id=""
+                              class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[350px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                              placeholder="Enter reserved tickets here"
+                              formControlName="reserveAllocation"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="mb-5">
+                          <!-- src/app/accordion/accordion.component.html -->
+                          <div class="accordion">
+                            <div class="flex space-x-2">
+                              @if(isFormVisible){
+                              <img
+                                src="assets/esp/dashboard/up.png"
+                                alt=""
+                                class="size-4"
+                              />
+
+                              } @else if (!isFormVisible) {
+                              <img
+                                src="assets/esp/dashboard/down1.png"
+                                alt=""
+                                class="size-4"
+                              />
+
+                              }
+                              <!-- <img src="assets/esp/dashboard/down1.png" alt="" class="size-4"> -->
+                              <button
+                                type="button"
+                                class=" accordion-button xl:-mt-1 text-[#E04F16]"
+                                (click)="toggleAccordion()"
+                              >
+                                Configure form rule
+                              </button>
+                            </div>
+
+                            <div
+                              class="accordion-content"
+                              [style.display]="isFormVisible ? 'block' : 'none'"
+                            >
+                              <h3
+                                class="w-fit h-[32px] font-inter font-semibold mt-5"
+                              >
+                                Configure form rules
+                              </h3>
+                              <p class="text-[14px] font-medium">
+                                Configure rules for what happens after this form
+                                is submitted
+                              </p>
+
+                              <div>
+                                <div
+                                  *ngFor="let rule of rules; let i = index"
+                                  class="flex flex-wrap 2xl:w-[400px] w-[620px] mt-4"
+                                >
+                                  <div
+                                    class="flex 2xl:w-[200px] w-full items-center"
+                                  >
+                                    <div class="mt-0 mr-2">If</div>
+                                    <select
+                                      id="ruleCategory{{ i }}"
+                                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                      2xl:w-[500px] xl:w-[330.5px] p-1.5 mb-2 mr-4"
+                                      formControlName="discountVariable"
+                                    >
+                                      <option value="Age">Age</option>
+                                      <option value="Gender">Gender</option>
+                                      <option value="Ticket">Ticket</option>
+                                    </select>
+
+                                    <select
+                                      id="condition{{ i }}"
+                                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[400px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                                      formControlName="discountRule"
+                                    >
+                                      <option value="Equals (=)" >
+                                        Equals (=)
+                                      </option>
+                                      <option value="LessThanOrEquals<=" >
+                                        LessThanOrEquals
+                                      </option>
+                                      <option value="GreaterThanOrEquals (>=)" >
+                                        GreaterThanOrEquals
+                                      </option>
+
+                                    </select>
+
+                                    <input
+                                      type="text"
+                                      id="ruleAge{{ i }}"
+                                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[100px] xl:w-[105px] w-[210px] p-1.5 mb-2 mr-4"
+                                      placeholder="18"
+                                      formControlName="conditionValue"
+                                    />
+
+                                    <select
+                                      id="amountOff{{ i }}"
+                                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[400px] xl:w-[330.5px] w-[310px] p-1.5 mb-2 mr-4"
+                                      formControlName="discountType"
+                                    >
+                                      <option value="Amount off">Amount off</option>
+                                      <option value="Discount off">Discount off</option>
+                                      </select>
+
+                                    <input
+                                      type="number"
+                                      id="discount{{ i }}"
+                                      class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg 2xl:w-[200px] xl:w-[105px] w-[310px] p-1.5 mb-2 mr-4"
+                                      placeholder="Ghc200"
+                                      formControlName="discountValue"
+                                    />
+
+                                    <img
+                                      src="assets/esp/dashboard/close.png"
+                                      alt=""
+                                      class="size-3 cursor-pointer"
+                                      (click)="removeRule(i)"
+                                    />
+                                  </div>
+                                </div>
+
+                                <div class="flex space-x-2 mt-5 mb-5">
+                                  <img
+                                    src="assets/esp/dashboard/add_rule.png"
+                                    alt=""
+                                    class="size-4"
+                                  />
+                                  <button
+                                    type="button"
+                                    (click)="addRule()"
+                                    class="accordion-button text-[#E04F16] font-semibold text-[14px] "
+                                  >
+                                    Add Rule
+                                  </button>
+                                </div>
+
+                                <hr
+                                  class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"
+                                />
+
+                                <div
+                                  class="2xl:ml-72 xl:ml-64 flex items-center justify-center space-x-2 mt-5 mb-5 bg-white border-gray-300 border-2 w-[126px] p-1 rounded-lg"
+                                >
+                                  <img
+                                    src="assets/esp/dashboard/plus_b.png"
+                                    alt=""
+                                    class="size-4 mt-1"
+                                  />
+                                  <button
+                                    type="button"
+                                    class=" accordion-button text-black font-semibold text-[14px]
+                                    xl:mr-50 "
+                                    (click)="addTicket()"
+                                  >
+                                    Add ticket
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- accordion ends here -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div class="mt-5 2xl:w-[820px] w-[620px] mb-20">
+                  <div
+                    class="btns-success flex -mt-[200px] ml-[375px] 2xl:ml-[570px] space-x-3 right-[350px] mb-20 pt-1"
+                  >
+                    <button
+                      type="button"
+                      class="bg-transparent border-[1px] text-black p-2 mt-64 cursor-pointer font-normal rounded-md max-w-max"
+                      (click)="prevStep()"
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      type="button"
+                      (click)="nextStep()"
+                      class="bg-[#BC1B06] p-2.5 mt-64 cursor-pointer clic text-white font-normal rounded-md w-[164px]"
+                    >
+                      Save & continue
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- preview and publish -->
+
+            <div *ngIf="step === 5">
+              <div class="ml-10 mt-20 2xl:ml-[100px] 2xl:mt-32 xl:mt-2">
+                <div *ngIf="fields">
+                  <p class="text-red-600">All fields required</p>
+                </div>
+
+                <h2 class="font-bold">Publish your event</h2>
+
+                <div
+                  class="bg-gray-100 p-4 rounded-lg 2xl:w-[800px] w-[620px] h-[316px] relative"
+                >
+                  <img
+                    *ngIf="eventImageUrl"
+                    [src]="eventImageUrl"
+                    alt="Uploaded Image"
+                    class="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div
+                    class="flex items-center justify-center absolute inset-0"
+                  ></div>
+                </div>
+
+                <div class="mt-5 2xl:w-[800px] w-[620px]">
+                  <div class="mt-10 block">
+                    <p class="text-[12px] font-medium">Event title</p>
+
+                    <h2 class="mt-5 mb-5 text-[10px] font-semibold">
+                      Harmony fest: A melody of music, food, and fun.
+                    </h2>
+
+                    <div class="mt-10 mb-10">
+                      <h2 class="font-semibold text-[12px] mt-10">Summary</h2>
+
+                      <!-- Lorem ipsum dolor sit amet consectetur. Magna massa congue sed erat non diam aliquam.
+                      Pellentesque egestas magna sed scelerisque dui scelerisque quam aenean.
+                      Tristique id nulla commodo tortor ultrices morbi nunc facilisi.
+                      Et scelerisque aliquam sed est arcu cursus lectus pretium. -->
+
+                      <p
+                        class="font-normal mt-3 text-[12px] text-[#667085] w-fit"
+                      >
+                        {{ CreateEvent.get("eventSummary")?.value }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="flex absolute 2xl:space-x-[260px] space-x-56 xl:mt-0 xl:h-8"
+                >
+                  <img src="assets/esp/start_date.png" alt="" class="" />
+                  <img src="assets/esp/location.png" alt="" class="" />
+                </div>
+
+                <div class="mt-5">
+                  <div
+                    class="labels flex 2xl:space-x-[260px] xl:space-x-48 xl:ml-5"
+                  >
+                    <label
+                      for="name"
+                      class="block mb-2 text-sm font-medium text-gray-900 xl:ml-5"
+                      >Start date</label
+                    >
+                    <label
+                      for="orgEmail"
+                      class="block mb-2 text-sm font-medium text-gray-900 xl:mr-5 xl:ml-10"
+                      >Location</label
+                    >
+                  </div>
+
+                  <div class="flex 2xl:w-[800px] w-[620px] pl-0">
+                    <div
+                      *ngIf="showStart"
+                      class="labels flex 2xl:space-x-[260px] xl:space-x-48 xl:ml-10"
+                    >
+                      <p
+                        class="lock mb-2 text-sm font-normal text-gray-900 xl:ml-10"
+                      >
+                        {{ CreateEvent.get("eventStartDate")?.value }}
+                      </p>
+
+                      <p
+                        class="lock mb-2 text-sm font-normal text-gray-900 xl:ml-20"
+                      >
+                        {{ CreateEvent.get("venueLocation")?.value }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="flex absolute 2xl:space-x-[260px] space-x-56 xl:mt-3 xl:h-8"
+                >
+                  <img src="assets/esp/ticket_price.png" alt="" class="" />
+                  <img src="assets/esp/ticket_quant.png" alt="" class="" />
+                </div>
+
+                <div class="mt-5">
+                  <div
+                    class="labels flex 2xl:space-x-[260px] xl:space-x-44 xl:ml-5"
+                  >
+                    <label
+                      for="name"
+                      class="block mb-2 text-sm font-medium text-gray-900 xl:ml-5"
+                      >Ticket Price</label
+                    >
+                    <label
+                      for="orgEmail"
+                      class="block mb-2 text-sm font-medium text-gray-900 xl:-ml-5"
+                      >Ticket quantity</label
+                    >
+                  </div>
+
+                  <div class="flex 2xl:w-[800px] w-[620px] pl-0">
+                    <div
+                      *ngIf="showStart"
+                      class="flex 2xl:space-x-[260px] xl:space-x-48 xl:ml-10"
+                    >
+                      <p
+                        class="block mb-2 text-sm font-normal text-gray-900 xl:ml-20"
+                      >
+                        {{ CreateEvent.get("eventPrice")?.value }}
+                      </p>
+                      <p
+                        class="block mb-2 text-sm font-normal text-gray-900 xl:ml-20"
+                      >
+                        {{ CreateEvent.get("ticketQuantity")?.value }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="flex absolute 2xl:space-x-[260px] xl:space-x-40 xl:mt-3 xl:h-8"
+                  >
+                    <img src="assets/esp/event_cat.png" alt="" class="" />
+                  </div>
+                </div>
+
+                <div class="mt-5">
+                  <div
+                    class="labels flex 2xl:space-x-[260px] space-x-56 xl:ml-5"
+                  >
+                    <label
+                      for="name"
+                      class="block mb-2 text-sm font-medium text-gray-900 xl:ml-5"
+                      >Event Category</label
+                    >
+                  </div>
+
+                  <div class="flex 2xl:w-[800px] w-[620px] pl-0">
+                    <div
+                      *ngIf="showStart"
+                      class="flex 2xl:space-x-[0px] space-x-0 w-32"
+                    >
+                      <p
+                        class="block mb-2 text-sm font-normal text-gray-900 xl:ml-48"
+                      >
+                        {{ CreateEvent.get("eventCategory")?.value }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-10">
+                  <h2 class="font-bold">Venue Layout</h2>
+
+                  <div
+                    class="bg-gray-100 p-4 rounded-lg 2xl:w-[800px] w-[620px] h-[316px] relative"
+                  >
+                    <img
+                      *ngIf="venueLayoutUrl"
+                      [src]="venueLayoutUrl"
+                      alt="Uploaded Image"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div
+                      class="flex items-center justify-center absolute inset-0"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="mt-10">
+                  <h2 class="font-bold">Seating types</h2>
+
+                  <div
+                    class="bg-gray-100 p-4 rounded-lg 2xl:w-[800px] w-[620px] h-[316px] relative"
+                  >
+                    <img
+                      *ngIf="seatingTypeUrl"
+                      [src]="seatingTypeUrl"
+                      alt="Uploaded Image"
+                      class="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div
+                      class="flex items-center justify-center absolute inset-0"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="mt-5">
+                  <h2 class="mt-5 mb-5 text-[10px] font-bold">
+                    When should we publish your event?
+                  </h2>
+                  <!-- <h2 class="font-semibold text-[12px] mt-10">Summary</h2> -->
+
+                  <div>
+                    <div class="leading-8">
+                      <input
+                        type="radio"
+                        id="publishNow"
+                        name="publishOption"
+                        value="now"
+                        (change)="togglePublishNow($event)"
+                      />
+                      <label
+                        for="publishNow"
+                        class="ml-2 text-sm font-normal text-gray-900"
+                        >Publish now</label
+                      >
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id="scheduleLater"
+                        name="publishOption"
+                        value="later"
+                        (change)="toggleSchedule($event)"
+                      />
+                      <label
+                        for="scheduleLater"
+                        class="ml-2 text-sm font-normal text-gray-900"
+                        >Schedule for later</label
+                      >
+                    </div>
+                  </div>
+
+                  <div *ngIf="scheduleForm" class="mt-4">
+                    <div class="mt-5">
+                      <div class="labels flex 2xl:space-x-[260px] space-x-72">
+                        <label
+                          for="name"
+                          class="block mb-2 text-sm font-medium text-gray-900"
+                          >Date</label
+                        >
+                        <label
+                          for="orgEmail"
+                          class="block mb-2 text-sm font-medium text-gray-900"
+                          >Time</label
+                        >
+                      </div>
+
+                      <div class="flex 2xl:w-[900px] w-[620px] pl-0">
+                        <input
+                          type="date"
+                          id=""
+                          class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+                          placeholder="Enter event title here"
+                          formControlName="scheduleDate"
+                        />
+
+                        <div
+                          class="text-red-600 absolute mt-1 text-[10px]"
+                          *ngIf="
+                            CreateEvent.get('scheduleDate')?.invalid &&
+                            (CreateEvent.get('scheduleDate')?.touched ||
+                              CreateEvent.get('eventStartDate')?.dirty)
+                          "
+                        >
+                          <span
+                            *ngIf="CreateEvent.get('scheduleDate')?.errors?.['scheduleDate']"
+                            >Field is required</span
+                          >
+                        </div>
+
+                        <input
+                          type="time"
+                          id=""
+                          class="pl-3 shadow-sm bg-white-50 border border-gray-300 .tagInput = ''; text-gray-900 text-sm rounded-lg block 2xl:w-[400px] w-[310px] p-1.5 mb-2 mr-4"
+                          placeholder="Enter event title here"
+                          formControlName="scheduleTime"
+                        />
+
+                        <div
+                          class="text-red-600 absolute mt-1 text-[10px]"
+                          *ngIf="
+                            CreateEvent.get('scheduleTime')?.invalid &&
+                            (CreateEvent.get('scheduleTime')?.touched ||
+                              CreateEvent.get('scheduleTime')?.dirty)
+                          "
+                        >
+                          <span
+                            *ngIf="CreateEvent.get('scheduleTime')?.errors?.['scheduleTime']"
+                            >Field is required</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-5 2xl:w-[820px] w-[620px] mb-20">
+                  <div
+                    class="btns-success flex -mt-[200px] ml-[375px] 2xl:ml-[570px] space-x-3 right-[350px] mb-20 pt-1"
+                  >
+                    <button
+                      type="button"
+                      class="bg-transparent border-[1px] text-black p-2 mt-64 cursor-pointer font-normal rounded-md max-w-max"
+                      (click)="prevStep()"
+                    >
+                      Previous
+                    </button>
+                    <div *ngIf="publishNow || scheduleForm">
+                      <button
+                        type="submit"
+                        class="bg-[#BC1B06] p-2.5 mt-64 cursor-pointer text-white font-normal rounded-md w-[164px]"
+                      >
+                        @if(eventCreated){
+
+                        <app-preload></app-preload>
+
+                        } @else if (isError) { Error } @else { Publish }
+                      </button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

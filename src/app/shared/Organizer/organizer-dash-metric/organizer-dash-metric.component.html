@@ -1,0 +1,124 @@
+<div class="card-all m-0 flex w-4/4 mt-4 ml-8 mr-8">
+  <div
+    class="card w-3/4 h-[152px] border-[1px] rounded-lg shadow-sm m-2 p-5"
+  >
+    <button class="absolute xl:ml-36 2xl:ml-72" id="dropdownButton">
+      <svg
+        class="w-5 h-5 rotate-90"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 3"
+      >
+        <path
+          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+        />
+      </svg>
+    </button>
+
+    <p class="mt-2 text-[14px] pt-5">Tickets</p>
+
+    <h2 class="mt-0  font-semibold text-[36px]">{{ 2000 | number }}</h2>
+  </div>
+
+  <div
+    class="card w-3/4 h-[152px] border-[1px] rounded-lg shadow-sm m-2 p-5"
+  >
+    <button
+      class="absolute xl:ml-36 2xl:ml-72"
+      id="dropdown"
+      data-dropdown-toggle="dropdown"
+    >
+      <svg
+        class="w-5 h-5 rotate-90"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 3"
+      >
+        <path
+          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+        />
+      </svg>
+
+
+      <div
+        id="dropdown"
+        class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+      >
+        <ul class="py-2" aria-labelledby="dropdownButton">
+          <li>
+            <a
+              href="#"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+              >Edit</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+              >Export Data</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+              >Delete</a
+            >
+          </li>
+        </ul>
+      </div>
+    </button>
+    <p class="mt-2 text-[14px] pt-5">Sales</p>
+    <h2 class="mt-0 font-semibold text-[36px]">
+      <span>{{ fourThousand | number }}</span>
+    </h2>
+  </div>
+
+  <div
+    class="card w-3/4 h-[152px] border-[1px] rounded-lg shadow-sm m-2 p-5"
+  >
+    <button class="absolute xl:ml-36 2xl:ml-72">
+      <svg
+        class="w-5 h-5 rotate-90"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 3"
+      >
+        <path
+          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+        />
+      </svg>
+    </button>
+
+    <p class="mt-2 text-[14px] pt-5">Revenue</p>
+    <h2 class="mt-0 font-semibold text-[36px]">
+      {{ EightThousand | number }}
+    </h2>
+  </div>
+  <div
+    class="card w-3/4 h-[152px] border-[1px] rounded-lg shadow-sm m-2 p-5"
+  >
+    <button class="absolute xl:ml-36 2xl:ml-72">
+      <svg
+        class="w-5 h-5 rotate-90"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 3"
+      >
+        <path
+          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+        />
+      </svg>
+    </button>
+
+    <p class="mt-2 text-[14px] pt-5">Events held</p>
+    <h2 class="mt-0 font-semibold text-[36px]">
+      {{ EightThousand | number }}
+    </h2>
+  </div>
+</div>

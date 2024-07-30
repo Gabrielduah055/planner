@@ -1,0 +1,28 @@
+.ngx-toastr.custom-toast-success {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.ngx-toastr.custom-toast-error {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+.ngx-toastr.custom-toast {
+  font-family: 'Arial, sans-serif';
+  font-size: 14px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+#toast-container {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
+}
+
+#toast-container .toast {
+  padding: 10px 20px;
+  border-radius: 8px;
+}

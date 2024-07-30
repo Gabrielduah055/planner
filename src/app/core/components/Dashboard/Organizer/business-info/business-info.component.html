@@ -1,0 +1,170 @@
+@if(start) {
+
+  <div class="flex w-[100%]">
+    <div class="w-[95px] h-[184px] xl:ml-[70px] xl:mt-[105px] absolute">
+      <h2 class="xl:w-[395px] h-[44px] font-bold text-[36px]">
+        Welcome to EventVista
+      </h2>
+      <p class="text-[16px] font-inter font-semibold mt-7 mb-5 xl:w-[495px] text-[#667085] flex">
+        Next are a few questions that can help us understand <br> how we can power your event
+      </p>
+      <button
+        type="button"
+        class="bg-[#BC1B06] absolute cursor-pointer 2xl:top-28 xl:top-[140px] text-white font-normal p-2.5 rounded-md w-[223px] 2xl:left-0 2xl:mt-7"
+        (click)="getStarted()"
+      >
+        <span class="flex">
+          <p class="ml-12">Get Started</p>
+          <img src="assets/esp/arrow-right.png" alt="" class="xl:size-5 xl:ml-3 xl:mt-1" />
+        </span>
+      </button>
+    </div>
+    <div>
+      <img src="assets/esp/org-dash/img/welcome.png" alt="" class="xl:w-[700px] xl:absolute xl:right-[10px] xl:p-5 xl:pr-5" />
+    </div>
+  </div>
+
+} @else {
+
+  <div class="font-inter flex w-[100%] absolute">
+    <div class="w-[395px] h-[184px] xl:ml-[70px] xl:mt-[50px] absolute">
+      <h2 class="xl:w-[550px] h-[44px] font-bold text-[26px] xl:pr-5">
+        Provide the following business information
+      </h2>
+
+       @if(success){
+        <app-success [success] = "successMessage" ></app-success>
+
+        } @else if(isError){
+          <app-error
+          [errorMessage]="errorMessage"
+          >
+          </app-error>
+        }
+
+      <div class="mt-16 pb-10">
+        <form [formGroup]="businessInfo" (ngSubmit)="onSubmit()">
+          <div>
+            <label for="organizationName" class="block mb-2 text-sm font-medium text-gray-900 text-[14px]">Organization name</label>
+            <input
+              type="text"
+              id="organizationName"
+              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 block w-4/5 mr-2"
+              placeholder="Enter your business name"
+              formControlName="organizationName"
+            />
+            <div class="absolute mt-1 text-[12px]" *ngIf="businessInfo.get('organizationName')?.touched && businessInfo.get('organizationName')?.invalid">
+              <small class="text-red-600" *ngIf="businessInfo.get('organizationName')?.errors?.['required']">Organization name is required.</small>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label for="organizationEmailAddress" class="block mb-2 text-sm font-medium text-gray-900 text-[14px]">Organization email address</label>
+            <input
+              type="email"
+              id="organizationEmailAddress"
+              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 block w-4/5 mr-2"
+              placeholder="Enter your business email address"
+              formControlName="organizationEmailAddress"
+            />
+            <div class="absolute mt-1 text-[12px]"  *ngIf="businessInfo.get('organizationEmailAddress')?.touched && businessInfo.get('organizationEmailAddress')?.invalid">
+              <small class="text-red-600" *ngIf="businessInfo.get('organizationEmailAddress')?.errors?.['required']">Email is required.</small>
+              <small class="text-red-600" *ngIf="businessInfo.get('organizationEmailAddress')?.errors?.['email']">Email is invalid.</small>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label for="organizationCertificate" class="block mb-2 text-sm font-medium text-gray-900 text-[14px]">Upload organization certificate</label>
+            <input
+              type="file"
+              id="organizationCertificate"
+              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 block w-4/5 mr-2"
+              placeholder="Organizer Logo*"
+              (change)="organizationCertificateImage($event, 'organizationCertificate')"
+            />
+            <div class="absolute mt-1 text-[12px]"  *ngIf="businessInfo.get('organizationCertificate')?.touched && businessInfo.get('organizationCertificate')?.invalid">
+              <small class="text-red-600" *ngIf="businessInfo.get('organizationCertificate')?.errors?.['required']">Organization certificate is required.</small>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label for="organizationLogo" class="block mb-2 text-sm font-medium text-gray-900 text-[14px]">Upload organization logo</label>
+            <input
+              type="file"
+              id="organizationLogo"
+              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 block w-4/5 mr-2"
+              placeholder="Organizer Logo*"
+              (change)="organizationLogoImage($event, 'organizationLogo')"
+            />
+            <div class="absolute mt-1 text-[12px]"  *ngIf="businessInfo.get('organizationLogo')?.touched && businessInfo.get('organizationLogo')?.invalid">
+              <small class="text-red-600" *ngIf="businessInfo.get('organizationLogo')?.errors?.['required']">Organization logo is required.</small>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label for="organizationWebsite" class="block mb-2 text-sm font-medium text-gray-900 text-[14px]">Organization website link</label>
+            <input
+              type="url"
+              id="organizationWebsite"
+              class="pl-3 shadow-sm bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2 block w-4/5 mr-2"
+              placeholder="Paste your business website link here"
+              formControlName="organizationWebsite"
+            />
+            <div class="absolute mt-1 text-[12px]"  *ngIf="businessInfo.get('organizationWebsite')?.touched && businessInfo.get('organizationWebsite')?.invalid">
+              <small class="text-red-600" *ngIf="businessInfo.get('organizationWebsite')?.errors?.['required']">Organization website link is required.</small>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 text-[14px]">Description</label>
+            <textarea
+              id="description"
+              rows="4"
+              class="block p-2.5 w-4/5 text-sm text-gray-900 bg-white-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder=""
+              formControlName="description"
+            ></textarea>
+            <div class="absolute mt-1 text-[12px]"  *ngIf="businessInfo.get('Description')?.touched && businessInfo.get('Description')?.invalid">
+              <small class="text-red-600" *ngIf="businessInfo.get('Description')?.errors?.['required']">Description is required.</small>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="xl:mt-[50px]">
+      <img
+        src="assets/esp/org-dash/img/business.png"
+        alt=""
+        class="xl:w-[700px] xl:absolute xl:right-[10px] xl:p-5 xl:pr-5"
+      />
+
+      <button (click)="onSubmit()"
+    type="submit"
+    class="absolute bg-[#BC1B06] p-2.5 xl:mt-[620px] cursor-pointer text-white font-normal rounded-md w-[164px]
+     xl:absolute xl:right-[10px] xl:mr-20 "
+  >
+
+
+  @if(loading){
+
+    <app-login-preload [loadingMessage]="loadingMessage" ></app-login-preload>
+
+
+} 
+@else {
+
+  <p class=""> Save & continue</p>
+
+}
+  </button>
+    </div>
+
+
+
+  </div>
+
+
+
+}

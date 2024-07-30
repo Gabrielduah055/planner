@@ -1,0 +1,197 @@
+<div
+  class="font-inter relative flex flex-col bg-clip-border rounded-xl bg-white
+  text-gray-700 sm:h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-sm
+  shadow-blue-gray-900/5 lg:h-[calc(100vh-2rem)] 2xl:h-[calc(100vh-2rem)]"
+>
+<app-organizer-dash></app-organizer-dash>
+
+  <div
+    class="dash absolute ml-[305px] border-[1px] rounded-t-lg w-[900px]
+    h-auto 2xl:absolute 2xl:ml-[305px] 2xl:border-[1px] 2xl:rounded-t-lg
+    2xl:w-[1580px] xl:w-[940px] 2xl:h-[935px]"
+  >
+    <div
+      class="dash border-[1px] rounded-t-lg p-0 pl-5 flex 2xl:border-[1px]
+      2xl:rounded-t-lg 2xl:p-2 2xl:pl-5 2xl:flex"
+    >
+
+
+    <app-organizer-top-bar
+    [heading]="heading"
+    [sub_Heading]="sub_heading"
+    >
+    </app-organizer-top-bar>
+
+      <div
+        class="dash-content-right flex size-7 ml-[300px] space-x-5 mt-2 2xl:flex
+        2xl:size-7 2xl:ml-[530px] 2xl:space-x-5 2xl:mt-2 xl:mt-5"
+      >
+
+
+
+
+
+      </div>
+
+    </div>
+
+
+    <div class="flex justify-between mx-8 mt-8 mb-4">
+
+      <div class="w-1/5 border-gray-200 pr-8 text-[14px]">
+        <h2 class="mb-2 text-lg tracking-tight font-bold text-gray-900 lg:text-md text-left">
+          {{ SettingTexts.personalInfo }}
+        </h2>
+        <p class="mb-8 lg:mb-16 font-light text-sm text-gray-500 dark:text-gray-400 sm:text-xl lg:text-sm text-left">
+          {{ SettingTexts.updatePhoto }}
+        </p>
+      </div>
+
+
+
+      <div class="w-4/5 2xl:w-3/5 border border-gray-200 rounded-lg shadow-md p-8">
+        <div class="">
+          @if (isSubmitted){
+            <app-success [success] = "success" ></app-success>          }
+            @else if(unAuthorized){
+              <app-unauthorized></app-unauthorized>
+
+           }  @else if(isIncorrect){
+            <app-invalid-password [errorMessage] = "errorMessage"></app-invalid-password>
+                      }
+        </div>
+
+
+        <form class="space-y-8 relative" [formGroup]="orgSetti">
+
+
+
+          <div class="mt-5">
+
+            <div class="flex space-x-80 2xl:space-x-80">
+              <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">
+                First Name
+              </label>
+              <label for="lastName" class="block mb-2 pl-60 text-sm font-medium text-gray-900">
+                Last Name
+              </label>
+            </div>
+            <div class="flex space-x-4">
+              <input
+                type="text"
+                id="firstName"
+                formControlName="firstName"
+                class="pl-3 shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-1/2 p-1.5"
+                placeholder="Enter first name here"
+              />
+              <input
+                type="text"
+                id="lastName"
+                formControlName="lastName"
+                class="pl-3 shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-1/2 p-1.5"
+                placeholder="Enter last name here"
+              />
+            </div>
+
+            <div class="mt-5 relative">
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
+                Email
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.3334 4.9987C18.3334 4.08203 17.5834 3.33203 16.6667 3.33203H3.33341C2.41675 3.33203 1.66675 4.08203 1.66675 4.9987M18.3334 4.9987V14.9987C18.3334 15.9154 17.5834 16.6654 16.6667 16.6654H3.33341C2.41675 16.6654 1.66675 15.9154 1.66675 14.9987V4.9987M18.3334 4.9987L10.0001 10.832L1.66675 4.9987" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="pl-10 shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-1.5"
+                  placeholder="Enter email here"
+
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mt-8">
+            <div class="flex items-center">
+              <img *ngIf="profileImageUrl; else svgFallback" class="rounded-full border 2xl:w-[200px] 2xl:h-[200px]" [src]="profileImageUrl" alt="profile picture" />
+              <ng-template #svgFallback>
+
+
+                @if(profilImage  == ''){
+                  <img
+                  src="assets/esp/dashboard/avatar.png"
+                  alt="Navbar Image"
+                  class="w-20 h-20 rounded-full mr-2"
+                />
+                } @else {
+                  <img
+
+                  src="{{profilImage}}"
+                  alt="Navbar Image"
+                  class="w-20 h-20 rounded-full mr-2"
+                />
+                }
+
+              </ng-template>
+              <div
+                class="pl-3 ml-10 shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-1.5"
+                (dragover)="onDragOver($event)"
+                (dragleave)="onDragLeave($event)"
+                (drop)="onDrop($event, 'profileImage')"
+              >
+                <figure class="flex flex-col items-center py-2">
+                  <label for="fileInput" class="cursor-pointer">
+                    <img src="assets/esp/dashboard/upload.png" class="w-10 h-10 rounded-full bg-gray-200 p-2" alt="" />
+                  </label>
+                  <input type="file" id="fileInput" class="hidden" (change)="onFileSelected($event, 'profileImage')"  />
+                  <p class="my-4 text-center">
+                    <span class="text-red-600 font-bold lg:text-sm">Click to upload</span>
+                    <span> or drag and drop</span><br />
+                    <span>{{ SettingTexts.imageSpec }}</span>
+                  </p>
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end space-x-5 mt-8">
+            <button type="button" class="bg-white border border-gray-300 text-black font-normal py-2 px-4 rounded-lg" (click)="cancel()">
+              Cancel
+            </button>
+            <button type="submit" class="bg-red-600 text-white font-normal py-2 px-4 rounded-lg" (click)="onSubmit()">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="card-all m-0 flex w-4/4 mt-10 ml-8 mr-8">
+      <div
+        class="card w-full h-[486px] border-[0px] rounded-lg shadow-none m-2 p-5"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLogoutModalVisible" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+    <div class="logout text-left">
+      <h3 class="mb-2">Log Out</h3>
+      <p>
+        Are you sure you want to discard? By discarding<br>
+        you will lose all the information entered
+      </p>
+    </div>
+    <div class="mt-4 flex justify-center">
+      <button (click)="cancelDiscard()" class="bg-white border border-gray-400 text-gray-800 py-2 px-4 rounded-lg mr-2">Cancel</button>
+      <button (click)="confirmDiscard()" class="bg-red-600 text-white py-2 px-4 rounded-lg">Discard</button>
+    </div>
+  </div>
+
+
+  </div>

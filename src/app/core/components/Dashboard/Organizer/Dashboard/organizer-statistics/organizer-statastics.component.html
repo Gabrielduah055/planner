@@ -1,29 +1,50 @@
-<div class=" p-5">
-    <h2 class="font-medium text-2xl">Best Selling</h2>
-    <div class="flex items-center  gap-16">
-      <div class="chart">
-        <div class="chart relative">
-          <div id="doughnutChartContainer" class="w-60 h-60"></div>
-        </div>
+<div class="p-5">
+  <h2 class="font-medium text-2xl">Best Selling</h2>
+  <div class="flex items-center gap-16">
+    <div class="chart">
+      <div class="chart relative">
+        <div id="doughnutChartContainer" class="w-60 h-60"></div>
       </div>
-      <div class="flex flex-col gap-10">
-        <div class="flex items-center gap-12">
-          <h6 class="text-slate-600 font-normal text-sm" >Monthly</h6>
-          <h6 class="text-slate-600 font-normal text-sm" >Weekly</h6>
-          <h6 class="text-slate-600 font-normal text-sm" >Daily</h6>
+    </div>
+    <div class="flex flex-col gap-10">
+      <div class="flex items-center gap-12">
+        <h6
+          class="text-slate-600 font-normal text-sm cursor-pointer"
+          (click)="onMonthly()"
+        >
+          Monthly
+        </h6>
+        <h6
+          class="text-slate-600 font-normal text-sm cursor-pointer"
+          (click)="onWeekly()"
+        >
+          Weekly
+        </h6>
+        <h6
+          class="text-slate-600 font-normal text-sm cursor-pointer"
+          (click)="onDaily()"
+        >
+          Daily
+        </h6>
+      </div>
+      <p class="text-slate-400 font-light text-sm">
+        Explore best-selling events monthly, weekly, or daily. Track ticket
+        availability, sales, and total events held. Visualize data with a
+        circular graph for tickets left, sold, and events held. Optimize event
+        planning for successl.
+      </p>
+      <div class="flex items-center gap-10">
+        <div class="flex flex-col gap-3">
+          <div class="w-12 h-2 bg-orange-400"></div>
+          <h3 class="text-slate-700 text-sm">{{ left }}</h3>
+          <p>Tickets left</p>
         </div>
-        <p class="text-slate-400 font-light text-sm">Explore best-selling events monthly, weekly, or daily. Track ticket availability, sales, and total  events held. Visualize data with a circular graph for tickets left, sold, and events held. Optimize event planning for successl.</p>
-        <div class="flex items-center gap-10">
-          <div class="flex flex-col gap-3">
-            <div class="w-12 h-2 bg-orange-400"></div>
-            <h3 class="text-slate-700 text-sm">15 Left</h3>
-            <p>Tickets left</p>
-          </div>
-          <div class="flex flex-col gap-3">
-            <div class="w-12 h-2 bg-orange-500"></div>
-            <h3 class="text-slate-700 text-sm">15</h3>
-            <p>Ticket sold</p>
-          </div>
+        <div class="flex flex-col gap-3">
+          <div class="w-12 h-2 bg-orange-500"></div>
+          <h3 class="text-slate-700 text-sm">{{ sold }}</h3>
+          <p>Ticket sold</p>
         </div>
       </div>
     </div>
+  </div>
+</div>
